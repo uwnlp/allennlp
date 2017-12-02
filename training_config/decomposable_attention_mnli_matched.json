@@ -19,8 +19,8 @@
       "end_tokens": ["@@NULL@@"]
     }
   },
-  "train_data_path": "/home/suchin/Github/real_nli/data/multinli_1.0/mini_train.jsonl",
-  "validation_data_path": "/home/suchin/Github/real_nli/data/multinli_1.0/mini_matched_dev.jsonl",
+  "train_data_path": "~/real_nli/data/multinli_1.0/multinli_1.0_train.jsonl"_,
+  "validation_data_path": "~/real_nli/data/multinli_1.0/multinli_1.0_dev_matched.jsonl",
   "model": {
     "type": "decomposable_attention",
     "text_field_embedder": {
@@ -52,7 +52,7 @@
       "input_size": 500,
       "hidden_size": 300,
       "num_layers": 3,
-      "recurrent_dropout_probability": 0.2,
+      "recurrent_dropout_probability": 0.2g,
       "use_highway": true
     },
     "attend_feedforward": {
