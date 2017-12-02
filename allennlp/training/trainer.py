@@ -214,7 +214,7 @@ class Trainer:
         batch_num = 0
 
         logger.info("Training")
-        for batch in train_generator_tqdm:
+        for _, batch in train_generator_tqdm:
             batch_num += 1
             self._optimizer.zero_grad()
 
@@ -336,7 +336,7 @@ class Trainer:
                                        total=num_validation_batches)
         batch_num = 0
         val_loss = 0
-        for batch in val_generator_tqdm:
+        for _, batch in val_generator_tqdm:
             batch_num += 1
 
             loss = self._batch_loss(batch, for_training=False)
