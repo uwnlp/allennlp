@@ -6,12 +6,12 @@ from allennlp.common import Params
 from allennlp.common.checks import ConfigurationError
 from allennlp.data import Vocabulary
 from allennlp.models.model import Model
-from allennlp.modules import FeedForward, MatrixAttention
+from allennlp.modules import FeedForward, MatrixAttention, Highway
 from allennlp.modules import Seq2SeqEncoder, SimilarityFunction, TimeDistributed, TextFieldEmbedder
 from allennlp.nn import InitializerApplicator, RegularizerApplicator
 from allennlp.nn.util import get_text_field_mask, last_dim_softmax, weighted_sum
 from allennlp.training.metrics import CategoricalAccuracy
-
+from allennlp.modules.elmo import _ElmoCharacterEncoder
 
 @Model.register("decomposable_attention")
 class DecomposableAttention(Model):
@@ -73,6 +73,8 @@ class DecomposableAttention(Model):
         super(DecomposableAttention, self).__init__(vocab, regularizer)
 
         self._text_field_embedder = text_field_embedder
+        self._highway_layer = TimeDistributed(Highway(text_field_embedder.get_output_dim(),
+                                                      3))
         self._attend_feedforward = TimeDistributed(attend_feedforward)
         self._matrix_attention = MatrixAttention(similarity_function)
         self._compare_feedforward = TimeDistributed(compare_feedforward)
@@ -82,10 +84,10 @@ class DecomposableAttention(Model):
 
         self._num_labels = vocab.get_vocab_size(namespace="labels")
 
-        if text_field_embedder.get_output_dim() != attend_feedforward.get_input_dim():
-            raise ConfigurationError("Output dimension of the text_field_embedder (dim: {}), "
+        if hypothesis_encoder.get_output_dim() != attend_feedforward.get_input_dim():
+            raise ConfigurationError("Output dimension of the hypothesis_encoder (dim: {}), "
                                      "must match the input_dim of the FeedForward layer "
-                                     "attend_feedforward, (dim: {}). ".format(text_field_embedder.get_output_dim(),
+                                     "attend_feedforward, (dim: {}). ".format(hypothesis_encoder.get_output_dim(),
                                                                               attend_feedforward.get_input_dim()))
         if aggregate_feedforward.get_output_dim() != self._num_labels:
             raise ConfigurationError("Final output dimension (%d) must equal num labels (%d)" %
@@ -93,7 +95,7 @@ class DecomposableAttention(Model):
 
         self._accuracy = CategoricalAccuracy()
         self._loss = torch.nn.CrossEntropyLoss()
-
+        
         initializer(self)
 
     def forward(self,  # type: ignore
@@ -124,15 +126,14 @@ class DecomposableAttention(Model):
         loss : torch.FloatTensor, optional
             A scalar loss to be optimised.
         """
+        
         # embedded_premise = self._text_field_embedder(premise)
-        embedded_hypothesis = self._text_field_embedder(hypothesis)
+        embedded_hypothesis = self._highway_layer(self._text_field_embedder(hypothesis))    
         # premise_mask = get_text_field_mask(premise).float()
         hypothesis_mask = get_text_field_mask(hypothesis).float()
-
         # if self._premise_encoder:
         #     embedded_premise = self._premise_encoder(embedded_premise, premise_mask)
-        if self._hypothesis_encoder:
-            embedded_hypothesis = self._hypothesis_encoder(embedded_hypothesis, hypothesis_mask)
+        embedded_hypothesis = self._hypothesis_encoder(embedded_hypothesis, hypothesis_mask)
 
 
 
@@ -189,6 +190,7 @@ class DecomposableAttention(Model):
     def from_params(cls, vocab: Vocabulary, params: Params) -> 'DecomposableAttention':
         embedder_params = params.pop("text_field_embedder")
         text_field_embedder = TextFieldEmbedder.from_params(vocab, embedder_params)
+       
 
         # premise_encoder_params = params.pop("premise_encoder", None)
         # if premise_encoder_params is not None:
