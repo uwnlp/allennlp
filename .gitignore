@@ -11,4 +11,6 @@ allennlp.egg-info/
 build/
 dist/
 .mypy_cache
-
+nlppython36/
+*.json
+*.csv

@@ -58,7 +58,7 @@ class DataIterator(Registrable):
             padding_lengths = batch.get_padding_lengths()
             logger.debug("Batch padding lengths: %s", str(padding_lengths))
             logger.debug("Batch size: %d", len(batch.instances))
-            yield batch.as_array_dict(padding_lengths, verbose=False)
+            yield batch, batch.as_array_dict(padding_lengths, verbose=False)
 
     def _create_batches(self, dataset: Dataset, shuffle: bool) -> List[List[Instance]]:
         """

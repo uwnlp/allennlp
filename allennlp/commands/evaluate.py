@@ -24,7 +24,7 @@ and report any metrics calculated by the model.
 from typing import Dict, Any
 import argparse
 import logging
-
+import pandas as pd
 import tqdm
 
 from allennlp.commands.subcommand import Subcommand
@@ -72,7 +72,7 @@ class Evaluate(Subcommand):
                                help='a HOCON structure used to override the experiment configuration')
 
         subparser.set_defaults(func=evaluate_from_args)
-
+        subparser.add_argument('-s', '--subset', action='store_true', default=False)
         return subparser
 
 
@@ -85,14 +85,37 @@ def evaluate(model: Model,
     generator = iterator(dataset, num_epochs=1)
     logger.info("Iterating over dataset")
     generator_tqdm = tqdm.tqdm(generator, total=iterator.get_num_batches(dataset))
-    for batch in generator_tqdm:
+    output = pd.DataFrame()
+    for raw_batch, batch in generator_tqdm:
+        raw_fields = [x.fields for x in raw_batch.instances]
+        parsed_fields = []
+
+        for item in raw_fields:
+            premise = " ".join([x.text for x in item['premise'].tokens])
+            hypothesis = " ".join([x.text for x in item['hypothesis'].tokens])
+            label = item['label'].label
+            parsed_fields.append({"sentence1": premise, "sentence2": hypothesis, "gold_label": label})
+        parsed_fields = pd.DataFrame(parsed_fields)
         tensor_batch = arrays_to_variables(batch, cuda_device, for_training=False)
-        model.forward(**tensor_batch)
+        bo = model.forward(**tensor_batch)
         metrics = model.get_metrics()
         description = ', '.join(["%s: %.2f" % (name, value) for name, value in metrics.items()]) + " ||"
         generator_tqdm.set_description(description)
-
-    return model.get_metrics()
+        batch_output = pd.DataFrame()
+        INVERSE_LABEL_MAP = {
+                        0: "entailment",
+                        1: "neutral",
+                        2: "contradiction",
+                        3: "hidden"
+                    }
+        batch_output['prediction_label'] = bo['label_logits'].data.numpy().argmax(axis=1)
+        batch_output['prediction_score'] = bo['label_probs'].data.numpy().max(axis=1)
+        batch_output['prediction_label'] = batch_output.prediction_label.apply(lambda x: INVERSE_LABEL_MAP[x])
+        parsed_output = pd.concat([parsed_fields, batch_output], axis=1)
+        output = pd.concat([output, parsed_output], axis=0)
+    hard_subset = output.loc[output.gold_label != output.prediction_label]
+    easy_subset = output.loc[output.gold_label == output.prediction_label]
+    return model.get_metrics(), hard_subset, easy_subset
 
 
 def evaluate_from_args(args: argparse.Namespace) -> Dict[str, Any]:
@@ -117,11 +140,13 @@ def evaluate_from_args(args: argparse.Namespace) -> Dict[str, Any]:
 
     iterator = DataIterator.from_params(config.pop("iterator"))
 
-    metrics = evaluate(model, dataset, iterator, args.cuda_device)
-
+    metrics, hard_subset, easy_subset = evaluate(model, dataset, iterator, args.cuda_device)
+    
     logger.info("Finished evaluating.")
     logger.info("Metrics:")
     for key, metric in metrics.items():
         logger.info("%s: %s", key, metric)
-
+    if args.subset:
+        hard_subset.to_json("hard_subset.json", lines=True, orient='records')
+        easy_subset.to_json("easy_subset.json", lines=True, orient='records')
     return metrics
