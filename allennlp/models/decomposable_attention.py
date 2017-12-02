@@ -77,8 +77,8 @@ class DecomposableAttention(Model):
         self._matrix_attention = MatrixAttention(similarity_function)
         self._compare_feedforward = TimeDistributed(compare_feedforward)
         self._aggregate_feedforward = aggregate_feedforward
-        self._premise_encoder = premise_encoder
-        self._hypothesis_encoder = hypothesis_encoder or premise_encoder
+        # self._premise_encoder = premise_encoder
+        self._hypothesis_encoder = hypothesis_encoder #or premise_encoder
 
         self._num_labels = vocab.get_vocab_size(namespace="labels")
 
@@ -124,20 +124,24 @@ class DecomposableAttention(Model):
         loss : torch.FloatTensor, optional
             A scalar loss to be optimised.
         """
-        embedded_premise = self._text_field_embedder(premise)
+        # embedded_premise = self._text_field_embedder(premise)
         embedded_hypothesis = self._text_field_embedder(hypothesis)
-        premise_mask = get_text_field_mask(premise).float()
+        # premise_mask = get_text_field_mask(premise).float()
         hypothesis_mask = get_text_field_mask(hypothesis).float()
 
-        if self._premise_encoder:
-            embedded_premise = self._premise_encoder(embedded_premise, premise_mask)
+        # if self._premise_encoder:
+        #     embedded_premise = self._premise_encoder(embedded_premise, premise_mask)
         if self._hypothesis_encoder:
             embedded_hypothesis = self._hypothesis_encoder(embedded_hypothesis, hypothesis_mask)
 
-        projected_premise = self._attend_feedforward(embedded_premise)
+
+
+        # projected_premise = self._attend_feedforward(embedded_premise)
         projected_hypothesis = self._attend_feedforward(embedded_hypothesis)
+
         # Shape: (batch_size, premise_length, hypothesis_length)
-        similarity_matrix = self._matrix_attention(projected_premise, projected_hypothesis)
+        # similarity_matrix = self._matrix_attention(projected_premise, projected_hypothesis)
+        similarity_matrix = self._matrix_attention(projected_hypothesis, projected_hypothesis)
 
         # Shape: (batch_size, premise_length, hypothesis_length)
         p2h_attention = last_dim_softmax(similarity_matrix, hypothesis_mask)
@@ -145,24 +149,27 @@ class DecomposableAttention(Model):
         attended_hypothesis = weighted_sum(embedded_hypothesis, p2h_attention)
 
         # Shape: (batch_size, hypothesis_length, premise_length)
-        h2p_attention = last_dim_softmax(similarity_matrix.transpose(1, 2).contiguous(), premise_mask)
-        # Shape: (batch_size, hypothesis_length, embedding_dim)
-        attended_premise = weighted_sum(embedded_premise, h2p_attention)
+        # h2p_attention = last_dim_softmax(similarity_matrix.transpose(1, 2).contiguous(), premise_mask)
+        # # Shape: (batch_size, hypothesis_length, embedding_dim)
+        # attended_premise = weighted_sum(embedded_premise, h2p_attention)
+        #
+        # premise_compare_input = torch.cat([embedded_premise, attended_hypothesis], dim=-1)
+        # hypothesis_compare_input = torch.cat([embedded_hypothesis, attended_premise], dim=-1)
+        hypothesis_compare_input = torch.cat([embedded_hypothesis, attended_hypothesis], dim=-1)
 
-        premise_compare_input = torch.cat([embedded_premise, attended_hypothesis], dim=-1)
-        hypothesis_compare_input = torch.cat([embedded_hypothesis, attended_premise], dim=-1)
-
-        compared_premise = self._compare_feedforward(premise_compare_input)
-        compared_premise = compared_premise * premise_mask.unsqueeze(-1)
-        # Shape: (batch_size, compare_dim)
-        compared_premise = compared_premise.sum(dim=1)
+        # compared_premise = self._compare_feedforward(premise_compare_input)
+        # compared_premise = compared_premise * premise_mask.unsqueeze(-1)
+        # # Shape: (batch_size, compare_dim)
+        # compared_premise = compared_premise.sum(dim=1)
 
         compared_hypothesis = self._compare_feedforward(hypothesis_compare_input)
         compared_hypothesis = compared_hypothesis * hypothesis_mask.unsqueeze(-1)
         # Shape: (batch_size, compare_dim)
         compared_hypothesis = compared_hypothesis.sum(dim=1)
 
-        aggregate_input = torch.cat([compared_premise, compared_hypothesis], dim=-1)
+        aggregate_input = compared_hypothesis #torch.cat([compared_premise, compared_hypothesis], dim=-1)
+        print(aggregate_input)
+        # torch.cat([compared_premise, compared_hypothesis], dim=-1)
         label_logits = self._aggregate_feedforward(aggregate_input)
         label_probs = torch.nn.functional.softmax(label_logits)
 
@@ -185,11 +192,11 @@ class DecomposableAttention(Model):
         embedder_params = params.pop("text_field_embedder")
         text_field_embedder = TextFieldEmbedder.from_params(vocab, embedder_params)
 
-        premise_encoder_params = params.pop("premise_encoder", None)
-        if premise_encoder_params is not None:
-            premise_encoder = Seq2SeqEncoder.from_params(premise_encoder_params)
-        else:
-            premise_encoder = None
+        # premise_encoder_params = params.pop("premise_encoder", None)
+        # if premise_encoder_params is not None:
+        #     premise_encoder = Seq2SeqEncoder.from_params(premise_encoder_params)
+        # else:
+        #     premise_encoder = None
 
         hypothesis_encoder_params = params.pop("hypothesis_encoder", None)
         if hypothesis_encoder_params is not None:
@@ -210,7 +217,7 @@ class DecomposableAttention(Model):
                    similarity_function=similarity_function,
                    compare_feedforward=compare_feedforward,
                    aggregate_feedforward=aggregate_feedforward,
-                   premise_encoder=premise_encoder,
+                   # premise_encoder=premise_encoder,
                    hypothesis_encoder=hypothesis_encoder,
                    initializer=initializer,
                    regularizer=regularizer)
