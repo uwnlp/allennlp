@@ -11,8 +11,8 @@
       "end_tokens": ["@@NULL@@"]
     }
   },
-  "train_data_path": "https://s3-us-west-2.amazonaws.com/allennlp/datasets/snli/snli_1.0_train.jsonl",
-  "validation_data_path": "https://s3-us-west-2.amazonaws.com/allennlp/datasets/snli/snli_1.0_dev.jsonl",
+  "train_data_path": "/home/swabha/real_nli_base/real_nli/data/snli_1.0/snli_1.0_train.jsonl",
+  "validation_data_path": "/home/swabha/real_nli_base/real_nli/data/snli_1.0/snli_1.0_dev.jsonl",
   "model": {
     "type": "decomposable_attention",
     "text_field_embedder": {
