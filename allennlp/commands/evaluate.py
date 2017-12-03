@@ -89,26 +89,20 @@ def evaluate(model: Model,
     for raw_batch, batch in generator_tqdm:
         raw_fields = [x.fields for x in raw_batch.instances]
         parsed_fields = []
-
+        inverse_label_map = {}
         for item in raw_fields:
             premise = " ".join([x.text for x in item['premise'].tokens])
             hypothesis = " ".join([x.text for x in item['hypothesis'].tokens])
             label = item['label'].label
+            inverse_label_map.update({item['label']._label_id: item['label'].label})
             parsed_fields.append({"sentence1": premise, "sentence2": hypothesis, "gold_label": label})
         parsed_fields = pd.DataFrame(parsed_fields)
         tensor_batch = arrays_to_variables(batch, cuda_device, for_training=False)
         bo = model.forward(**tensor_batch)
-        import ipdb; ipdb.set_trace()
         metrics = model.get_metrics()
         description = ', '.join(["%s: %.2f" % (name, value) for name, value in metrics.items()]) + " ||"
         generator_tqdm.set_description(description)
         batch_output = pd.DataFrame()
-        INVERSE_LABEL_MAP = {
-                        0: "entailment",
-                        1: "neutral",
-                        2: "contradiction",
-                        3: "hidden"
-                    }
         batch_output['prediction_label'] = bo['label_logits'].data.numpy().argmax(axis=1)
         batch_output['prediction_score'] = bo['label_probs'].data.numpy().max(axis=1)
         batch_output['prediction_label'] = batch_output.prediction_label.apply(lambda x: INVERSE_LABEL_MAP[x])
