@@ -14,7 +14,7 @@
   "train_data_path": "/home/swabha/real_nli_base/real_nli/data/multinli_1.0/multinli_1.0_train.jsonl",
   "validation_data_path": "/home/swabha/real_nli_base/real_nli/data/multinli_1.0/multinli_1.0_dev_mismatched.jsonl",
   "model": {
-    "type": "decomposable_attention",
+    "type": "decomposable_attention_uw",
     "text_field_embedder": {
       "tokens": {
         "type": "embedding",
