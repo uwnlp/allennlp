@@ -98,6 +98,7 @@ def evaluate(model: Model,
         parsed_fields = pd.DataFrame(parsed_fields)
         tensor_batch = arrays_to_variables(batch, cuda_device, for_training=False)
         bo = model.forward(**tensor_batch)
+        import ipdb; ipdb.set_trace()
         metrics = model.get_metrics()
         description = ', '.join(["%s: %.2f" % (name, value) for name, value in metrics.items()]) + " ||"
         generator_tqdm.set_description(description)
