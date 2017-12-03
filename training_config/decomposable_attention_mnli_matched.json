@@ -48,12 +48,12 @@
       }
     },
     "hypothesis_encoder": {
-      "type": "bilstm",
+      "type": "lstm",
+      "bilstm": True,
       "input_size": 500,
       "hidden_size": 300,
       "num_layers": 3,
-      "recurrent_dropout_probability": 0.2g,
-      "use_highway": true
+      "recurrent_dropout_probability": 0.2,
     },
     "attend_feedforward": {
       "input_dim": 300,
