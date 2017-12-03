@@ -19,8 +19,8 @@
       "end_tokens": ["@@NULL@@"]
     }
   },
-  "train_data_path": "/home/sg01/real_nli/data/multinli_1.0/multinli_1.0_train.jsonl",
-  "validation_data_path": "/home/sg01/real_nli/data/multinli_1.0/multinli_1.0_dev_matched.jsonl",
+  "train_data_path": "/home/suchin/Github/real_nli/data/multinli_1.0/mini_train.jsonl",
+  "validation_data_path": "/home/suchin/Github/real_nli/data/multinli_1.0/mini_matched_dev.jsonl",
   "model": {
     "type": "decomposable_attention",
     "text_field_embedder": {
@@ -56,7 +56,7 @@
       "dropout": 0.2,
     },
     "attend_feedforward": {
-      "input_dim": 300,
+      "input_dim": 600,
       "num_layers": 2,
       "hidden_dims": 200,
       "activations": "relu",
@@ -64,7 +64,7 @@
     },
     "similarity_function": {"type": "dot_product"},
     "compare_feedforward": {
-      "input_dim": 600,
+      "input_dim": 1200,
       "num_layers": 2,
       "hidden_dims": 200,
       "activations": "relu",
