@@ -108,6 +108,7 @@ def evaluate(model: Model,
         batch_output['prediction_label'] = batch_output.prediction_label.apply(lambda x: inverse_label_map[x])
         parsed_output = pd.concat([parsed_fields, batch_output], axis=1)
         output = pd.concat([output, parsed_output], axis=0)
+    import ipdb; ipdb.set_trace()
     hard_subset = output.loc[output.gold_label != output.prediction_label]
     easy_subset = output.loc[output.gold_label == output.prediction_label]
     return model.get_metrics(), hard_subset, easy_subset
