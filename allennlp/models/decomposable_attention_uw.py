@@ -13,7 +13,7 @@ from allennlp.nn.util import get_text_field_mask, last_dim_softmax, weighted_sum
 from allennlp.training.metrics import CategoricalAccuracy
 from allennlp.modules.elmo import _ElmoCharacterEncoder
 
-@Model.register("decomposable_attention")
+@Model.register("decomposable_attention_uw")
 class DecomposableAttention(Model):
     """
     This ``Model`` implements the Decomposable Attention model described in `"A Decomposable
