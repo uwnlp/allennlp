@@ -14,7 +14,7 @@ from allennlp.training.metrics import CategoricalAccuracy
 from allennlp.modules.elmo import _ElmoCharacterEncoder
 
 @Model.register("decomposable_attention_uw")
-class DecomposableAttention(Model):
+class DecomposableAttentionUW(Model):
     """
     This ``Model`` implements the Decomposable Attention model described in `"A Decomposable
     Attention Model for Natural Language Inference"
@@ -70,7 +70,7 @@ class DecomposableAttention(Model):
                  hypothesis_encoder: Optional[Seq2SeqEncoder] = None,
                  initializer: InitializerApplicator = InitializerApplicator(),
                  regularizer: Optional[RegularizerApplicator] = None) -> None:
-        super(DecomposableAttention, self).__init__(vocab, regularizer)
+        super(DecomposableAttentionUW, self).__init__(vocab, regularizer)
 
         self._text_field_embedder = text_field_embedder
         self._highway_layer = TimeDistributed(Highway(text_field_embedder.get_output_dim(),
@@ -187,7 +187,7 @@ class DecomposableAttention(Model):
                 }
 
     @classmethod
-    def from_params(cls, vocab: Vocabulary, params: Params) -> 'DecomposableAttention':
+    def from_params(cls, vocab: Vocabulary, params: Params) -> 'DecomposableAttentionUW':
         embedder_params = params.pop("text_field_embedder")
         text_field_embedder = TextFieldEmbedder.from_params(vocab, embedder_params)
        
