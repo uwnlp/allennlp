@@ -5,27 +5,58 @@
       "tokens": {
         "type": "single_id",
         "lowercase_tokens": true
+      },
+      "token_characters": {
+        "type": "characters",
+        "character_tokenizer": {
+          "byte_encoding": "utf-8",
+          "start_tokens": [259],
+          "end_tokens": [260]
+        }
       }
     },
     "tokenizer": {
       "end_tokens": ["@@NULL@@"]
     }
   },
-  "train_data_path": "/home/sg01/real_nli/data/snli_1.0/snli_1.0_train.jsonl",
-  "validation_data_path": "/home/sg01/real_nli/data/snli_1.0/snli_1.0_dev.jsonl",
+  "train_data_path": "/home/sg01/real_nli/data/multinli_1.0/snli_1.0_train.jsonl",
+  "validation_data_path": "/home/sg01/real_nli/data/multinli_1.0/snli_1.0_dev.jsonl",
   "model": {
-    "type": "decomposable_attention",
+    "type": "decomposable_attention_uw",
     "text_field_embedder": {
       "tokens": {
         "type": "embedding",
         "projection_dim": 200,
         "pretrained_file": "https://s3-us-west-2.amazonaws.com/allennlp/datasets/glove/glove.6B.300d.txt.gz",
         "embedding_dim": 300,
-        "trainable": false
+        "trainable": false,
+      
+      },
+      "token_characters": {
+        "type": "character_encoding",
+        "embedding": {
+          "num_embeddings": 262,
+          "embedding_dim": 16
+        },
+        "encoder": {
+          "type": "cnn",
+          "embedding_dim": 16,
+          "num_filters": 100,
+          "ngram_filter_sizes": [3, 4, 5]
+        },
+        "dropout": 0.2
       }
     },
+    "hypothesis_encoder": {
+      "type": "lstm",
+      "bidirectional": true,
+      "input_size": 500,
+      "hidden_size": 300,
+      "num_layers": 3,
+      "dropout": 0.2,
+    },
     "attend_feedforward": {
-      "input_dim": 200,
+      "input_dim": 600,
       "num_layers": 2,
       "hidden_dims": 200,
       "activations": "relu",
@@ -33,7 +64,7 @@
     },
     "similarity_function": {"type": "dot_product"},
     "compare_feedforward": {
-      "input_dim": 400,
+      "input_dim": 1200,
       "num_layers": 2,
       "hidden_dims": 200,
       "activations": "relu",
