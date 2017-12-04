@@ -19,8 +19,8 @@
       "end_tokens": ["@@NULL@@"]
     }
   },
-  "train_data_path": "/home/sg01/real_nli/data/snli_1.0/snli_train_half_1.json",
-  "validation_data_path": "/home/sg01/real_nli/data/snli_1.0/snli_train_half_2.json",
+  "train_data_path": "/home/sg01/real_nli/data/snli_1.0/snli_train_half_2.json",
+  "validation_data_path": "/home/sg01/real_nli/data/snli_1.0/snli_train_half_1.json",
   "model": {
     "type": "decomposable_attention_uw",
     "text_field_embedder": {
