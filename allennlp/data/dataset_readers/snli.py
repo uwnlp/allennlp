@@ -81,8 +81,8 @@ class SnliReader(DatasetReader):
         hypothesis_tokens = self._tokenizer.tokenize(hypothesis)
         fields['premise'] = TextField(premise_tokens, self._token_indexers)
         fields['hypothesis'] = TextField(hypothesis_tokens, self._token_indexers)
-        fields['premise_binary_parse'] = premise_binary_parse
-        fields['hypothesis_binary_parse'] = hypothesis_binary_parse
+        fields['premise_binary_parse'] = TextField(premise_binary_parse)
+        fields['hypothesis_binary_parse'] = TextField(hypothesis_binary_parse)
         if label:
             fields['label'] = LabelField(label)
         return Instance(fields)
