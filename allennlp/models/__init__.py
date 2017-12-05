@@ -13,3 +13,4 @@ from allennlp.models.semantic_role_labeler import SemanticRoleLabeler
 from allennlp.models.simple_tagger import SimpleTagger
 from allennlp.models.coreference_resolution.coref import CoreferenceResolver
 from allennlp.models.decomposable_attention_uw import DecomposableAttentionUW
+from allennlp.models.decomposable_attention_hyp_only import DecomposableAttentionHypOnly

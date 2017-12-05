@@ -6,15 +6,15 @@ from allennlp.common import Params
 from allennlp.common.checks import ConfigurationError
 from allennlp.data import Vocabulary
 from allennlp.models.model import Model
-from allennlp.modules import FeedForward, MatrixAttention, Highway
+from allennlp.modules import FeedForward, MatrixAttention
 from allennlp.modules import Seq2SeqEncoder, SimilarityFunction, TimeDistributed, TextFieldEmbedder
 from allennlp.nn import InitializerApplicator, RegularizerApplicator
 from allennlp.nn.util import get_text_field_mask, last_dim_softmax, weighted_sum
 from allennlp.training.metrics import CategoricalAccuracy
-from allennlp.modules.elmo import _ElmoCharacterEncoder
 
-@Model.register("decomposable_attention_uw")
-class DecomposableAttentionUW(Model):
+
+@Model.register("decomposable_attention_hyp_only")
+class DecomposableAttentionHypOnly(Model):
     """
     This ``Model`` implements the Decomposable Attention model described in `"A Decomposable
     Attention Model for Natural Language Inference"
@@ -24,12 +24,10 @@ class DecomposableAttentionUW(Model):
     before doing the decomposable entailment step.  We generalize this to any
     :class:`Seq2SeqEncoder` that can be applied to the premise and/or the hypothesis before
     computing entailment.
-
     The basic outline of this model is to get an embedded representation of each word in the
     premise and hypothesis, align words between the two, compare the aligned phrases, and make a
     final entailment decision based on this aggregated comparison.  Each step in this process uses
     a feedforward network to modify the representation.
-
     Parameters
     ----------
     vocab : ``Vocabulary``
@@ -70,11 +68,9 @@ class DecomposableAttentionUW(Model):
                  hypothesis_encoder: Optional[Seq2SeqEncoder] = None,
                  initializer: InitializerApplicator = InitializerApplicator(),
                  regularizer: Optional[RegularizerApplicator] = None) -> None:
-        super(DecomposableAttentionUW, self).__init__(vocab, regularizer)
+        super(DecomposableAttention, self).__init__(vocab, regularizer)
 
         self._text_field_embedder = text_field_embedder
-        self._highway_layer = TimeDistributed(Highway(text_field_embedder.get_output_dim(),
-                                                      3))
         self._attend_feedforward = TimeDistributed(attend_feedforward)
         self._matrix_attention = MatrixAttention(similarity_function)
         self._compare_feedforward = TimeDistributed(compare_feedforward)
@@ -84,10 +80,10 @@ class DecomposableAttentionUW(Model):
 
         self._num_labels = vocab.get_vocab_size(namespace="labels")
 
-        if hypothesis_encoder.get_output_dim() != attend_feedforward.get_input_dim():
-            raise ConfigurationError("Output dimension of the hypothesis_encoder (dim: {}), "
+        if text_field_embedder.get_output_dim() != attend_feedforward.get_input_dim():
+            raise ConfigurationError("Output dimension of the text_field_embedder (dim: {}), "
                                      "must match the input_dim of the FeedForward layer "
-                                     "attend_feedforward, (dim: {}). ".format(hypothesis_encoder.get_output_dim(),
+                                     "attend_feedforward, (dim: {}). ".format(text_field_embedder.get_output_dim(),
                                                                               attend_feedforward.get_input_dim()))
         if aggregate_feedforward.get_output_dim() != self._num_labels:
             raise ConfigurationError("Final output dimension (%d) must equal num labels (%d)" %
@@ -95,7 +91,7 @@ class DecomposableAttentionUW(Model):
 
         self._accuracy = CategoricalAccuracy()
         self._loss = torch.nn.CrossEntropyLoss()
-        
+
         initializer(self)
 
     def forward(self,  # type: ignore
@@ -112,11 +108,9 @@ class DecomposableAttentionUW(Model):
             From a ``TextField``
         label : torch.IntTensor, optional (default = None)
             From a ``LabelField``
-
         Returns
         -------
         An output dictionary consisting of:
-
         label_logits : torch.FloatTensor
             A tensor of shape ``(batch_size, num_labels)`` representing unnormalised log
             probabilities of the entailment label.
@@ -126,14 +120,15 @@ class DecomposableAttentionUW(Model):
         loss : torch.FloatTensor, optional
             A scalar loss to be optimised.
         """
-        
         # embedded_premise = self._text_field_embedder(premise)
-        embedded_hypothesis = self._highway_layer(self._text_field_embedder(hypothesis))    
+        embedded_hypothesis = self._text_field_embedder(hypothesis)
         # premise_mask = get_text_field_mask(premise).float()
         hypothesis_mask = get_text_field_mask(hypothesis).float()
+
         # if self._premise_encoder:
         #     embedded_premise = self._premise_encoder(embedded_premise, premise_mask)
-        embedded_hypothesis = self._hypothesis_encoder(embedded_hypothesis, hypothesis_mask)
+        if self._hypothesis_encoder:
+            embedded_hypothesis = self._hypothesis_encoder(embedded_hypothesis, hypothesis_mask)
 
 
 
@@ -187,10 +182,9 @@ class DecomposableAttentionUW(Model):
                 }
 
     @classmethod
-    def from_params(cls, vocab: Vocabulary, params: Params) -> 'DecomposableAttentionUW':
+    def from_params(cls, vocab: Vocabulary, params: Params) -> 'DecomposableAttention':
         embedder_params = params.pop("text_field_embedder")
         text_field_embedder = TextFieldEmbedder.from_params(vocab, embedder_params)
-       
 
         # premise_encoder_params = params.pop("premise_encoder", None)
         # if premise_encoder_params is not None:
