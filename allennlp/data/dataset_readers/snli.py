@@ -59,9 +59,11 @@ class SnliReader(DatasetReader):
 
                 premise = example["sentence1"]
                 hypothesis = example["sentence2"]
-                # premise_binary_parse = example["sentence1_binary_parse"]
-                # hypothesis_binary_parse = example["sentence2_binary_parse"]
+                premise_binary_parse = example["sentence1_binary_parse"]
+                hypothesis_binary_parse = example["sentence2_binary_parse"]
                 instances.append(self.text_to_instance(premise, hypothesis, 
+                                                       premise_binary_parse,
+                                                       hypothesis_binary_parse,
                                                        label))
         if not instances:
             raise ConfigurationError("No instances were read from the given filepath {}. "
@@ -72,8 +74,8 @@ class SnliReader(DatasetReader):
     def text_to_instance(self,  # type: ignore
                          premise: str,
                          hypothesis: str,
-                        #  premise_binary_parse: str,
-                        #  hypothesis_binary_parse: str,
+                         premise_binary_parse: str,
+                         hypothesis_binary_parse: str,
                          label: str = None) -> Instance:
         # pylint: disable=arguments-differ
         fields: Dict[str, Field] = {}
@@ -81,8 +83,8 @@ class SnliReader(DatasetReader):
         hypothesis_tokens = self._tokenizer.tokenize(hypothesis)
         fields['premise'] = TextField(premise_tokens, self._token_indexers)
         fields['hypothesis'] = TextField(hypothesis_tokens, self._token_indexers)
-        # fields['metadata_premise_binary_parse'] = MetadataField(premise_binary_parse)
-        # fields['metadata_hypothesis_binary_parse'] = MetadataField(hypothesis_binary_parse)
+        fields['metadata_premise_binary_parse'] = MetadataField(premise_binary_parse)
+        fields['metadata_hypothesis_binary_parse'] = MetadataField(hypothesis_binary_parse)
         if label:
             fields['label'] = LabelField(label)
         return Instance(fields)
