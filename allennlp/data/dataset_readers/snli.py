@@ -10,7 +10,7 @@ from allennlp.common.checks import ConfigurationError
 from allennlp.common.file_utils import cached_path
 from allennlp.data.dataset import Dataset
 from allennlp.data.dataset_readers.dataset_reader import DatasetReader
-from allennlp.data.fields import Field, TextField, LabelField
+from allennlp.data.fields import Field, TextField, LabelField, MetadataField
 from allennlp.data.instance import Instance
 from allennlp.data.token_indexers import SingleIdTokenIndexer, TokenIndexer
 from allennlp.data.tokenizers import Tokenizer, WordTokenizer
@@ -81,8 +81,8 @@ class SnliReader(DatasetReader):
         hypothesis_tokens = self._tokenizer.tokenize(hypothesis)
         fields['premise'] = TextField(premise_tokens, self._token_indexers)
         fields['hypothesis'] = TextField(hypothesis_tokens, self._token_indexers)
-        fields['premise_binary_parse'] = TextField(premise_binary_parse)
-        fields['hypothesis_binary_parse'] = TextField(hypothesis_binary_parse)
+        fields['premise_binary_parse'] = MetadataField(premise_binary_parse)
+        fields['hypothesis_binary_parse'] = MetadataField(hypothesis_binary_parse)
         if label:
             fields['label'] = LabelField(label)
         return Instance(fields)
