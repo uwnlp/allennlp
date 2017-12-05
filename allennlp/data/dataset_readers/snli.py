@@ -72,8 +72,8 @@ class SnliReader(DatasetReader):
     def text_to_instance(self,  # type: ignore
                          premise: str,
                          hypothesis: str,
-                         premise_binary_parse: str,
-                         hypothesis_binary_parse: str,
+                        #  premise_binary_parse: str,
+                        #  hypothesis_binary_parse: str,
                          label: str = None) -> Instance:
         # pylint: disable=arguments-differ
         fields: Dict[str, Field] = {}
