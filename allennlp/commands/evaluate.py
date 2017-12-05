@@ -98,7 +98,7 @@ def evaluate(model: Model,
             label = item['label'].label
             parsed_fields.append({"sentence1": premise,
                                   "sentence2": hypothesis,
-                                  "gold_label": label})
+                                  "gold_label": label,
                                   "hypothesis_binary_parse": hypothesis_binary_parse,
                                   "premise_binary_parse": premise_binary_parse})
 
