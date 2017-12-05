@@ -96,12 +96,14 @@ def evaluate(model: Model,
             # hypothesis_binary_parse = item["metadata_hypothesis_binary_parse"]
             # premise_binary_parse = item["metadata_premise_binary_parse"]
             label = item['label'].label
-            inverse_label_map.update({int(item['label']._label_id): item['label'].label})
+            inverse_label_map.update({item['label']._label_id: item['label'].label})
             parsed_fields.append({"sentence1": premise,
                                   "sentence2": hypothesis,
                                   "gold_label": label})
                                 #   "hypothesis_binary_parse": hypothesis_binary_parse,
                                 #   "premise_binary_parse": premise_binary_parse})
+
+        import ipdb; ipdb.set_trace()
         parsed_fields = pd.DataFrame(parsed_fields)
         tensor_batch = arrays_to_variables(batch, cuda_device, for_training=False)
         tensor_batch.pop('metadata_hypothesis_binary_parse', None)
