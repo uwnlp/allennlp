@@ -93,15 +93,15 @@ def evaluate(model: Model,
         for item in raw_fields:
             premise = " ".join([x.text for x in item['premise'].tokens]).replace("@@NULL@@", '')
             hypothesis = " ".join([x.text for x in item['hypothesis'].tokens]).replace("@@NULL@@", '')
-            hypothesis_binary_parse = item["metadata_hypothesis_binary_parse"]
-            premise_binary_parse = item["metadata_premise_binary_parse"]
+            # hypothesis_binary_parse = item["metadata_hypothesis_binary_parse"]
+            # premise_binary_parse = item["metadata_premise_binary_parse"]
             label = item['label'].label
             inverse_label_map.update({item['label']._label_id: item['label'].label})
             parsed_fields.append({"sentence1": premise,
                                   "sentence2": hypothesis,
-                                  "gold_label": label,
-                                  "hypothesis_binary_parse": hypothesis_binary_parse,
-                                  "premise_binary_parse": premise_binary_parse})
+                                  "gold_label": label)
+                                #   "hypothesis_binary_parse": hypothesis_binary_parse,
+                                #   "premise_binary_parse": premise_binary_parse})
         parsed_fields = pd.DataFrame(parsed_fields)
         tensor_batch = arrays_to_variables(batch, cuda_device, for_training=False)
         tensor_batch.pop('metadata_hypothesis_binary_parse', None)
@@ -116,7 +116,6 @@ def evaluate(model: Model,
         batch_output['prediction_label'] = batch_output.prediction_label.apply(lambda x: inverse_label_map[x])
         parsed_output = pd.concat([parsed_fields, batch_output], axis=1)
         output = pd.concat([output, parsed_output], axis=0)
-    import ipdb; ipdb.set_trace()
     hard_subset = output.loc[output.gold_label != output.prediction_label]
     easy_subset = output.loc[output.gold_label == output.prediction_label]
     return model.get_metrics(), hard_subset, easy_subset
