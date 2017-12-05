@@ -99,7 +99,7 @@ def evaluate(model: Model,
             inverse_label_map.update({item['label']._label_id: item['label'].label})
             parsed_fields.append({"sentence1": premise,
                                   "sentence2": hypothesis,
-                                  "gold_label": label)
+                                  "gold_label": label})
                                 #   "hypothesis_binary_parse": hypothesis_binary_parse,
                                 #   "premise_binary_parse": premise_binary_parse})
         parsed_fields = pd.DataFrame(parsed_fields)
