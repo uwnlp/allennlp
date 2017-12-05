@@ -104,6 +104,8 @@ def evaluate(model: Model,
                                   "premise_binary_parse": premise_binary_parse})
         parsed_fields = pd.DataFrame(parsed_fields)
         tensor_batch = arrays_to_variables(batch, cuda_device, for_training=False)
+        tensor_batch.pop('metadata_hypothesis_binary_parse', None)
+        tensor_batch.pop('metadata_premise_binary_parse', None)
         bo = model.forward(**tensor_batch)
         metrics = model.get_metrics()
         description = ', '.join(["%s: %.2f" % (name, value) for name, value in metrics.items()]) + " ||"
