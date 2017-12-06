@@ -92,10 +92,10 @@ def evaluate(model: Model,
         for item in raw_fields:
             premise = " ".join([x.text for x in item['premise'].tokens]).replace("@@NULL@@", '')
             hypothesis = " ".join([x.text for x in item['hypothesis'].tokens]).replace("@@NULL@@", '')
-            hypothesis_binary_parse = item["metadata_hypothesis_binary_parse"]['metadata']
-            premise_binary_parse = item["metadata_premise_binary_parse"]['metadata']
+            hypothesis_binary_parse = item["metadata_hypothesis_binary_parse"].metadata
+            premise_binary_parse = item["metadata_premise_binary_parse"].metadata
             if item.get('metadata_genre') is not None:
-                genre = item['metadata_genre']['metadata']
+                genre = item['metadata_genre'].metadata
             else:
                 genre = None
             label = item['label'].label
