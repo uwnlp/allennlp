@@ -50,7 +50,6 @@ class Evaluate(Subcommand):
         archive_file.add_argument('--archive-file', type=str, help='path to an archived trained model')
         archive_file.add_argument('--archive_file', type=str, help=argparse.SUPPRESS)
 
-
         evaluation_data_file = subparser.add_mutually_exclusive_group(required=True)
         evaluation_data_file.add_argument('--evaluation-data-file',
                                           type=str,
