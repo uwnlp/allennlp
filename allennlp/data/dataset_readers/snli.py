@@ -90,6 +90,8 @@ class SnliReader(DatasetReader):
                          hypothesis: str,
                          premise_binary_parse: str,
                          hypothesis_binary_parse: str,
+                         premise_parse: str,
+                         hypothesis_parse: str,
                          pair_id: str = None,
                          genre: str = None,
                          label: str = None) -> Instance:
