@@ -409,6 +409,8 @@ class Trainer:
         tensor_batch = arrays_to_variables(batch, self._cuda_device, for_training=for_training)
         tensor_batch.pop('metadata_hypothesis_binary_parse', None)
         tensor_batch.pop('metadata_premise_binary_parse', None)
+        tensor_batch.pop('metadata_premise_parse', None)
+        tensor_batch.pop('metadata_hypothesis_parse', None)
         tensor_batch.pop('metadata_genre', None)
         tensor_batch.pop('metadata_pair_id', None)
         return self._model.forward(**tensor_batch)

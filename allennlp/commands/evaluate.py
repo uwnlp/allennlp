@@ -94,6 +94,8 @@ def evaluate(model: Model,
             hypothesis = " ".join([x.text for x in item['hypothesis'].tokens]).replace("@@NULL@@", '')
             hypothesis_binary_parse = item["metadata_hypothesis_binary_parse"].metadata
             premise_binary_parse = item["metadata_premise_binary_parse"].metadata
+            hypothesis_parse = item["metadata_hypothesis_parse"].metadata
+            premise_parse = item["metadata_premise_parse"].metadata
             if item.get('metadata_pair_id') is not None:
                 pair_id = item['metadata_pair_id'].metadata
             else:
@@ -108,6 +110,8 @@ def evaluate(model: Model,
                                   "gold_label": label,
                                   "genre": genre,
                                   "pair_id": pair_id,
+                                  "sentence1_parse": premise_parse,
+                                  "sentence2_parse": hypothesis_parse,
                                   "sentence1_binary_parse": premise_binary_parse,
                                   "sentence2_binary_parse": hypothesis_binary_parse})
 
@@ -117,6 +121,8 @@ def evaluate(model: Model,
         tensor_batch.pop('metadata_premise_binary_parse', None)
         tensor_batch.pop('metadata_genre', None)
         tensor_batch.pop('metadata_pair_id', None)
+        tensor_batch.pop('metadata_premise_parse', None)
+        tensor_batch.pop('metadata_hypothesis_parse', None)
         bo = model.forward(**tensor_batch)
         metrics = model.get_metrics()
         description = ', '.join(["%s: %.2f" % (name, value) for name, value in metrics.items()]) + " ||"
