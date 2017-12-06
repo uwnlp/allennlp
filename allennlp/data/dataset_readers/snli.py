@@ -63,11 +63,16 @@ class SnliReader(DatasetReader):
                     genre = example['genre']
                 else:
                     genre = None
+                if example.get('pairID') is not None:
+                    pair_id = example['pairID']
+                else:
+                    pair_id = None
                 premise_binary_parse = example["sentence1_binary_parse"]
                 hypothesis_binary_parse = example["sentence2_binary_parse"]
                 instances.append(self.text_to_instance(premise, hypothesis, 
                                                        premise_binary_parse,
                                                        hypothesis_binary_parse,
+                                                       pair_id,
                                                        genre,
                                                        label))
         if not instances:
@@ -81,6 +86,7 @@ class SnliReader(DatasetReader):
                          hypothesis: str,
                          premise_binary_parse: str,
                          hypothesis_binary_parse: str,
+                         pair_id: str = None,
                          genre: str = None,
                          label: str = None) -> Instance:
         # pylint: disable=arguments-differ
@@ -91,6 +97,8 @@ class SnliReader(DatasetReader):
         fields['hypothesis'] = TextField(hypothesis_tokens, self._token_indexers)
         fields['metadata_premise_binary_parse'] = MetadataField(premise_binary_parse)
         fields['metadata_hypothesis_binary_parse'] = MetadataField(hypothesis_binary_parse)
+        if pair_id:
+            fields['metadata_pair_id'] = MetadataField(pair_id)
         if genre:
             fields['metadata_genre'] = MetadataField(genre)
         if label:
