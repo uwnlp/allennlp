@@ -143,7 +143,7 @@ class DecomposableAttentionHypOnly(Model):
         # Shape: (batch_size, compare_dim)
         compared_hypothesis = compared_hypothesis.sum(dim=1)
 
-        aggregate_input = torch.cat([compared_hypothesis, compared_hypothesis], dim=-1)
+        aggregate_input = compared_hypothesis
         label_logits = self._aggregate_feedforward(aggregate_input)
         label_probs = torch.nn.functional.softmax(label_logits)
 
