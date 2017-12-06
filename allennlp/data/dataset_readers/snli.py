@@ -82,10 +82,10 @@ class SnliReader(DatasetReader):
     def text_to_instance(self,  # type: ignore
                          premise: str,
                          hypothesis: str,
-                         premise_binary_parse: str,
-                         hypothesis_binary_parse: str,
-                         premise_parse: str,
-                         hypothesis_parse: str,
+                         premise_binary_parse: str = None,
+                         hypothesis_binary_parse: str = None,
+                         premise_parse: str = None,
+                         hypothesis_parse: str = None,
                          pair_id: str = None,
                          genre: str = None,
                          label: str = None) -> Instance:
