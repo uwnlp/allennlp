@@ -409,7 +409,7 @@ class Trainer:
         tensor_batch = arrays_to_variables(batch, self._cuda_device, for_training=for_training)
         tensor_batch.pop('metadata_hypothesis_binary_parse', None)
         tensor_batch.pop('metadata_premise_binary_parse', None)
-        tensor_batch.pop('genre', None)
+        tensor_batch.pop('metadata_genre', None)
         return self._model.forward(**tensor_batch)
 
     def _description_from_metrics(self, metrics: Dict[str, float]) -> str:
