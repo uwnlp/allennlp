@@ -59,18 +59,12 @@ class SnliReader(DatasetReader):
 
                 premise = example["sentence1"]
                 hypothesis = example["sentence2"]
-                if example.get('genre') is not None:
-                    genre = example['genre']
-                else:
-                    genre = None
-                if example.get('pairID') is not None:
-                    pair_id = example['pairID']
-                else:
-                    pair_id = None
-                premise_binary_parse = example["sentence1_binary_parse"]
-                hypothesis_binary_parse = example["sentence2_binary_parse"]
-                premise_parse = example["sentence1_parse"]
-                hypothesis_parse = example["sentence2_parse"]
+                genre = example.get('genre')
+                pair_id = example.get('pairID')
+                premise_binary_parse = example.get('sentence1_binary_parse')
+                hypothesis_binary_parse = example.get('sentence2_binary_parse')
+                premise_parse = example.get('sentence1_parse')
+                hypothesis_parse = example.get('sentence2_parse')
                 instances.append(self.text_to_instance(premise, hypothesis, 
                                                        premise_binary_parse,
                                                        hypothesis_binary_parse,
