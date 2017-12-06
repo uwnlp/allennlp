@@ -94,17 +94,23 @@ def evaluate(model: Model,
             hypothesis = " ".join([x.text for x in item['hypothesis'].tokens]).replace("@@NULL@@", '')
             hypothesis_binary_parse = item["metadata_hypothesis_binary_parse"]['metadata']
             premise_binary_parse = item["metadata_premise_binary_parse"]['metadata']
+            if item.get('metadata_genre') is not None:
+                genre = item['metadata_genre']['metadata']
+            else:
+                genre = None
             label = item['label'].label
             parsed_fields.append({"sentence1": premise,
                                   "sentence2": hypothesis,
                                   "gold_label": label,
-                                  "sentence2_binary_parse": hypothesis_binary_parse,
-                                  "sentence1_binary_parse": premise_binary_parse})
+                                  "genre": genre,
+                                  "sentence1_binary_parse": premise_binary_parse,
+                                  "sentence2_binary_parse": hypothesis_binary_parse})
 
         parsed_fields = pd.DataFrame(parsed_fields)
         tensor_batch = arrays_to_variables(batch, cuda_device, for_training=False)
         tensor_batch.pop('metadata_hypothesis_binary_parse', None)
         tensor_batch.pop('metadata_premise_binary_parse', None)
+        tensor_batch.pop('metadata_genre', None)
         bo = model.forward(**tensor_batch)
         metrics = model.get_metrics()
         description = ', '.join(["%s: %.2f" % (name, value) for name, value in metrics.items()]) + " ||"

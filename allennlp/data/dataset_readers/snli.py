@@ -59,11 +59,16 @@ class SnliReader(DatasetReader):
 
                 premise = example["sentence1"]
                 hypothesis = example["sentence2"]
+                if example.get('genre') is not None:
+                    genre = example['genre']
+                else:
+                    genre = None
                 premise_binary_parse = example["sentence1_binary_parse"]
                 hypothesis_binary_parse = example["sentence2_binary_parse"]
                 instances.append(self.text_to_instance(premise, hypothesis, 
                                                        premise_binary_parse,
                                                        hypothesis_binary_parse,
+                                                       genre,
                                                        label))
         if not instances:
             raise ConfigurationError("No instances were read from the given filepath {}. "
@@ -76,6 +81,7 @@ class SnliReader(DatasetReader):
                          hypothesis: str,
                          premise_binary_parse: str,
                          hypothesis_binary_parse: str,
+                         genre: str = None,
                          label: str = None) -> Instance:
         # pylint: disable=arguments-differ
         fields: Dict[str, Field] = {}
@@ -85,6 +91,8 @@ class SnliReader(DatasetReader):
         fields['hypothesis'] = TextField(hypothesis_tokens, self._token_indexers)
         fields['metadata_premise_binary_parse'] = MetadataField(premise_binary_parse)
         fields['metadata_hypothesis_binary_parse'] = MetadataField(hypothesis_binary_parse)
+        if genre:
+            fields['metadata_genre'] = MetadataField(genre)
         if label:
             fields['label'] = LabelField(label)
         return Instance(fields)
