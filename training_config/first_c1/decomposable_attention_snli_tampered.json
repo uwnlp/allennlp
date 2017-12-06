@@ -19,7 +19,7 @@
       "end_tokens": ["@@NULL@@"]
     }
   },
-  "train_data_path": "/home/sg01/real_nli/data/snli_1.0/tampered_snli_train.json",
+  "train_data_path": "/home/sg01/real_nli/data/snli_1.0/tampered_snli_train.jsonl",
   "validation_data_path": "/home/sg01/real_nli/data/snli_1.0/tampered_snli_dev.jsonl",
   "model": {
     "type": "decomposable_attention",
