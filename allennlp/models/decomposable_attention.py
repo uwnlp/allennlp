@@ -13,8 +13,8 @@ from allennlp.nn.util import get_text_field_mask, last_dim_softmax, weighted_sum
 from allennlp.training.metrics import CategoricalAccuracy
 from allennlp.modules.elmo import _ElmoCharacterEncoder
 
-@Model.register("decomposable_attention_uw")
-class DecomposableAttentionUW(Model):
+@Model.register("decomposable_attention")
+class DecomposableAttention(Model):
     """
     This ``Model`` implements the Decomposable Attention model described in `"A Decomposable
     Attention Model for Natural Language Inference"
@@ -70,7 +70,7 @@ class DecomposableAttentionUW(Model):
                  hypothesis_encoder: Optional[Seq2SeqEncoder] = None,
                  initializer: InitializerApplicator = InitializerApplicator(),
                  regularizer: Optional[RegularizerApplicator] = None) -> None:
-        super(DecomposableAttentionUW, self).__init__(vocab, regularizer)
+        super(DecomposableAttention, self).__init__(vocab, regularizer)
 
         self._text_field_embedder = text_field_embedder
         self._highway_layer = TimeDistributed(Highway(text_field_embedder.get_output_dim(),
