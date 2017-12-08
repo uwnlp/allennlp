@@ -60,7 +60,7 @@ class SnliReader(DatasetReader):
                 premise = example["sentence1"]
                 hypothesis = example["sentence2"]
                 genre = example.get('genre')
-                pair_id = example.get('pairID')
+                pair_id = example['pairID']
                 premise_binary_parse = example.get('sentence1_binary_parse')
                 hypothesis_binary_parse = example.get('sentence2_binary_parse')
                 premise_parse = example.get('sentence1_parse')
