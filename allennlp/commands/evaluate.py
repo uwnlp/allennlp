@@ -131,9 +131,9 @@ def evaluate(model: Model,
         description = ', '.join(["%s: %.2f" % (name, value) for name, value in metrics.items()]) + " ||"
         generator_tqdm.set_description(description)
         batch_output = pd.DataFrame()
-        batch_output['prediction_label'] = bo['label_logits'].data.numpy().argmax(axis=1)
+        # batch_output['prediction_label'] = bo['label_logits'].data.numpy().argmax(axis=1)
         batch_output['prediction_score'] = bo['label_probs'].data.numpy().max(axis=1)
-        batch_output['prediction_label'] = batch_output.prediction_label.apply(lambda x: inverse_label_map[x])
+        # batch_output['prediction_label'] = batch_output.prediction_label.apply(lambda x: inverse_label_map[x])
         parsed_output = pd.concat([parsed_fields, batch_output], axis=1)
         output = pd.concat([output, parsed_output], axis=0)
     import ipdb; ipdb.set_trace()
