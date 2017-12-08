@@ -99,8 +99,7 @@ class SnliReader(DatasetReader):
         fields['metadata_hypothesis_binary_parse'] = MetadataField(hypothesis_binary_parse)
         fields['metadata_hypothesis_parse'] = MetadataField(hypothesis_parse)
         fields['metadata_premise_parse'] = MetadataField(premise_parse)
-        if pair_id:
-            fields['metadata_pair_id'] = MetadataField(pair_id)
+        fields['metadata_pair_id'] = MetadataField(pair_id)
         if genre:
             fields['metadata_genre'] = MetadataField(genre)
         if label:
