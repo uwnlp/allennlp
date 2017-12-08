@@ -35,6 +35,7 @@ class Dataset:
                                                                 for k, v in x.fields.items()}
                                                                for x in instances]
         # Check all the field names and Field types are the same for every instance.
+        import ipdb; ipdb.set_trace()
         if not all([all_instance_fields_and_types[0] == x for x in all_instance_fields_and_types]):
             raise ConfigurationError("You cannot construct a Dataset with non-homogeneous Instances.")
 
