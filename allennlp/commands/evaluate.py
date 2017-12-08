@@ -138,7 +138,7 @@ def evaluate(model: Model,
         output = pd.concat([output, parsed_output], axis=0)
     import ipdb; ipdb.set_trace()
     hard_subset = output.loc[(output.gold_label != output.prediction_label)
-                             & (output.prediction_score <= 0.4)]
+                             | (output.prediction_score <= 0.4)]
     easy_subset = output.loc[(output.gold_label == output.prediction_label)
                              & (output.prediction_score > 0.4)]
     return model.get_metrics(), hard_subset, easy_subset
