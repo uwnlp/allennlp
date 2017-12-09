@@ -12,7 +12,7 @@
       }
     },
     "train_data_path": "/home/sg01/allennlp/final_data/snli_train_half_1_tampered.json",
-    "validation_data_path": "/home/sg01/allennlp/final_data/snli_dev_full_tampered.jsonl",
+    "validation_data_path": "/home/sg01/allennlp/final_data/snli_dev_full_tampered.json",
     "model": {
       "type": "decomposable_attention",
       "text_field_embedder": {
