@@ -11,8 +11,8 @@
         "end_tokens": ["@@NULL@@"]
       }
     },
-    "train_data_path": "/home/sg01/allennlp/final_data/tampered_snli_train.jsonl",
-    "validation_data_path": "/home/sg01/allennlp/final_data/tampered_snli_dev.jsonl",
+    "train_data_path": "/home/sg01/allennlp/final_data/snli_train_full_tampered.jsonl",
+    "validation_data_path": "/home/sg01/allennlp/final_data/snli_dev_full_tampered.jsonl",
     "model": {
       "type": "decomposable_attention",
       "text_field_embedder": {
