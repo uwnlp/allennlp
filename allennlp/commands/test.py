@@ -1,5 +1,5 @@
 import subprocess
-from config import *
+from allennlp.commands.config import *
 import argparse
 
 if __name__ == '__main__':
