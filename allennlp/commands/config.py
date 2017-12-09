@@ -1,0 +1,42 @@
+DATA_DIR = "test_run"
+
+
+MATCHED_TEST = {
+	"original": "~/real_nli/data/multinli_1.0/multinli_0.9_test_matched_unlabeled.jsonl", 
+	"tampered": "./{}/matched_test_full_tampered.json".format(DATA_DIR),
+	"untampered": "./{}/matched_test_full_untampered.json".format(DATA_DIR),
+}
+
+MISMATCHED_TEST = {
+	"original": "~/real_nli/data/multinli_1.0/multinli_0.9_test_mismatched_unlabeled.jsonl", 
+	"tampered": "./{}/mismatched_test_full_tampered.json".format(DATA_DIR),
+	"untampered": "./{}/mismatched_test_full_untampered.json".format(DATA_DIR),
+}
+
+
+MATCHED_DEV = {
+	"original": "~/real_nli/data/multinli_0.9/multinli_0.9_dev_matched.jsonl", 
+	"tampered": "./{}/matched_dev_full_tampered.json".format(DATA_DIR),
+	"untampered": "./{}/matched_dev_full_untampered.json".format(DATA_DIR),
+}
+
+MISMATCHED_DEV = {
+	"original": "~/real_nli/data/multinli_0.9/multinli_0.9_dev_mismatched.jsonl", 
+	"tampered": "./{}/mismatched_dev_full_tampered.json".format(DATA_DIR),
+	"untampered": "./{}/mismatched_dev_full_untampered.json".format(DATA_DIR),
+}
+
+MNLI_TRAIN = {
+	"original": "~/real_nli/data/multinli_0.9/multinli_0.9_train.jsonl", 
+	"tampered": "./{}/mnli_train_full_tampered.json".format(DATA_DIR),
+	"untampered": "./{}/mnli_train_full_untampered.json".format(DATA_DIR),
+}
+
+DATASETS = {"matched_test": MATCHED_TEST,
+		    "mismatched_test": MISMATCHED_TEST,
+		    "matched_dev": MATCHED_DEV,
+		    "mismatched_dev": MISMATCHED_DEV,
+		    "mnli_train": MNLI_TRAIN}
+
+MNLI_C1 = {"archive_file": "./logs/mnli_c1/model.tar.gz"}
+MODELS = {"mnli_c1": MNLI_C1}

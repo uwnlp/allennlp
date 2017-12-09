@@ -9,7 +9,7 @@ from allennlp.commands.train import Train
 from allennlp.commands.evaluate import Evaluate
 from allennlp.commands.subcommand import Subcommand
 from allennlp.service.predictors import DemoModel
-
+from allennlp.commands import test
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
 # Originally we were inconsistent about using hyphens and underscores
