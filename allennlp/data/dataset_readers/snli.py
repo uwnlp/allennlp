@@ -1,7 +1,7 @@
 from typing import Dict
 import json
 import logging
-
+import numpy as np
 from overrides import overrides
 import tqdm
 
@@ -53,7 +53,7 @@ class SnliReader(DatasetReader):
 
                 label = example["gold_label"]
                 if label == 'hidden':
-                    label = 'contradiction'
+                    label = np.random.choice(['contradiction', 'neutral', 'entailment'])
 
                 if label == '-':
                     # These were cases where the annotators disagreed; we'll just skip them.  It's
