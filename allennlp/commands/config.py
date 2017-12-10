@@ -85,4 +85,6 @@ DATASETS = {"multinli_0.9_test_matched_unlabeled": MATCHED_TEST,
 
 
 MNLI_C1 = {"archive_file": "./final_logs/c1-mnli/model.tar.gz"}
-MODELS = {"c1-mnli": MNLI_C1}
+SNLI_C1 = {"archive_file": "./final_logs/c1-snli/model.tar.gz"}
+
+MODELS = {"c1-mnli": MNLI_C1, "c1-snli": SNLI_C1}
