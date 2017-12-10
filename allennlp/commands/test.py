@@ -22,7 +22,7 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 	gpu = 'CUDA_VISIBLE_DEVICES={}'.format(args.gpu)
 	archive_file = MODELS[args.model]['archive_file']
-	evaluation_data_file = DATASETS[args.dataset]['full_tampered']
+	evaluation_data_file = DATASETS[args.dataset]['original']
 	if args.c1:
 		command = [gpu,
 				   "python -m allennlp.run evaluate",
