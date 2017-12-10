@@ -126,6 +126,7 @@ def evaluate(model: Model,
         tensor_batch.pop('metadata_pair_id', None)
         tensor_batch.pop('metadata_premise_parse', None)
         tensor_batch.pop('metadata_hypothesis_parse', None)
+        tensor_batch.pop('real_premise', None)
         bo = model.forward(**tensor_batch)
         metrics = model.get_metrics()
         description = ', '.join(["%s: %.2f" % (name, value) for name, value in metrics.items()]) + " ||"
