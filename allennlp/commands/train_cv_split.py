@@ -1,6 +1,6 @@
 import pandas as pd
 from allennlp.commands.config import *
-
+import os
 
 if __name__ == '__main__':
 	df = pd.read_json(DATASETS["multinli_0.9_train"]['original'], lines=True)
