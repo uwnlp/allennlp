@@ -413,7 +413,7 @@ class Trainer:
         tensor_batch.pop('metadata_hypothesis_parse', None)
         tensor_batch.pop('metadata_genre', None)
         tensor_batch.pop('metadata_pair_id', None)
-        tensor_bach.pop('real_premise', None)
+        tensor_batch.pop('real_premise', None)
         return self._model.forward(**tensor_batch)
 
     def _description_from_metrics(self, metrics: Dict[str, float]) -> str:
