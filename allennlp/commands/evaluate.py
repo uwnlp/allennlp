@@ -26,7 +26,7 @@ import argparse
 import logging
 import pandas as pd
 import tqdm
-
+import os
 from allennlp.commands.subcommand import Subcommand
 from allennlp.common.util import prepare_environment
 from allennlp.data import Dataset
