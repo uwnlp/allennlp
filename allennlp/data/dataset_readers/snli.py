@@ -41,7 +41,7 @@ class SnliReader(DatasetReader):
         self._token_indexers = token_indexers or {'tokens': SingleIdTokenIndexer()}
 
     @overrides
-    def read(self, file_path: str):
+    def read(self, file_path: str, c1: bool):
         # if `file_path` is a URL, redirect to the cache
         file_path = cached_path(file_path)
 
@@ -56,8 +56,12 @@ class SnliReader(DatasetReader):
                     # These were cases where the annotators disagreed; we'll just skip them.  It's
                     # like 800 out of 500k examples in the training data.
                     continue
-
-                premise = example["sentence1"]
+                if c1:
+                    premise = '<NULL>'
+                    real_premise = example["sentence1"]
+                else:
+                    premise = example["sentence1"]
+                    real_premise = example["sentence1"]
                 hypothesis = example["sentence2"]
                 genre = example.get('genre')
                 pair_id = example['pairID']
@@ -65,7 +69,9 @@ class SnliReader(DatasetReader):
                 hypothesis_binary_parse = example.get('sentence2_binary_parse')
                 premise_parse = example.get('sentence1_parse')
                 hypothesis_parse = example.get('sentence2_parse')
-                instances.append(self.text_to_instance(premise, hypothesis, 
+                instances.append(self.text_to_instance(premise,
+                                                       real_premise,
+                                                       hypothesis, 
                                                        premise_binary_parse,
                                                        hypothesis_binary_parse,
                                                        premise_parse,
@@ -81,6 +87,7 @@ class SnliReader(DatasetReader):
     @overrides
     def text_to_instance(self,  # type: ignore
                          premise: str,
+                         real_premise: str,
                          hypothesis: str,
                          premise_binary_parse: str = None,
                          hypothesis_binary_parse: str = None,
@@ -92,8 +99,10 @@ class SnliReader(DatasetReader):
         # pylint: disable=arguments-differ
         fields: Dict[str, Field] = {}
         premise_tokens = self._tokenizer.tokenize(premise)
+        real_premise_tokens = self._tokenizer.tokenize(real_premise)
         hypothesis_tokens = self._tokenizer.tokenize(hypothesis)
         fields['premise'] = TextField(premise_tokens, self._token_indexers)
+        fields['real_premise'] = TextField(real_premise_tokens, self._token_indexers)
         fields['hypothesis'] = TextField(hypothesis_tokens, self._token_indexers)
         fields['metadata_premise_binary_parse'] = MetadataField(premise_binary_parse)
         fields['metadata_hypothesis_binary_parse'] = MetadataField(hypothesis_binary_parse)
