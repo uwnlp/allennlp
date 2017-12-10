@@ -29,4 +29,4 @@ if __name__ == '__main__':
 			   "--evaluation-data-file",
 			   evaluation_data_file,
 			   "--subset"]
-	print(command)
+	print(" ".join(command))
