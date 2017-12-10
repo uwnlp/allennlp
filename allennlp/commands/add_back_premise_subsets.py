@@ -1,6 +1,6 @@
 import pandas as pd
 from allennlp.commands.config import *
-
+from tqdm import tqdm
 
 if __name__ == '__main__':
 	for dataset in tqdm(DATASETS):
