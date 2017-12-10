@@ -2,6 +2,7 @@ from subprocess import Popen, PIPE
 from allennlp.commands.config import *
 import argparse
 import os
+import subprocess
 
 def execute(cmd):
     popen = subprocess.Popen(cmd, stdout=subprocess.PIPE, universal_newlines=True)
