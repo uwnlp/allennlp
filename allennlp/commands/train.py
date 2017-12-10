@@ -137,7 +137,7 @@ def train_model(params: Params, serialization_dir: str, c1: bool) -> Model:
     validation_data_path = params.pop('validation_data_path', None)
     if validation_data_path is not None:
         logger.info("Reading validation data from %s", validation_data_path)
-        validation_data = dataset_reader.read(validation_data_path)
+        validation_data = dataset_reader.read(validation_data_path, c1)
         all_datasets["validation"] = validation_data
     else:
         validation_data = None
@@ -145,7 +145,7 @@ def train_model(params: Params, serialization_dir: str, c1: bool) -> Model:
     test_data_path = params.pop("test_data_path", None)
     if test_data_path is not None:
         logger.info("Reading test data from %s", test_data_path)
-        test_data = dataset_reader.read(test_data_path)
+        test_data = dataset_reader.read(test_data_path, c1)
         all_datasets["test"] = test_data
     else:
         test_data = None
