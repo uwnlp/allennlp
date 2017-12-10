@@ -31,7 +31,7 @@ if __name__ == '__main__':
 	p = Popen(command, stdout=PIPE, stderr=PIPE, shell=True)
 
 	for path in execute(command):
-    	print(path, end="")
+		print(path, end="")
 
 	# while p.poll() is None:
 	#     l = p.stdout.readline() # This blocks until it receives a newline.
