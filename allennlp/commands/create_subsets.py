@@ -9,5 +9,5 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 	easy_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['easy_tampered'])
 	hard_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['hard_tampered'])
-	subprocess.Popen(['mv', "easy_subset.json", easy_fp], shell=True)
-	subprocess.Popen(['mv', "hard_subset.json", hard_fp], shell=True)
+	print(" ".join(['mv', "easy_subset.json", easy_fp]))
+	print(" ".join(['mv', "hard_subset.json", hard_fp]))
