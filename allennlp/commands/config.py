@@ -38,10 +38,10 @@ MNLI_TRAIN = {
 	"original": "~/real_nli/data/multinli_0.9/multinli_0.9_train.jsonl", 
 	"full_tampered": "./{}/mnli_train_full_tampered.json".format(DATA_DIR),
 	"full_untampered": "./{}/mnli_train_full_untampered.json".format(DATA_DIR),
-	"easy_tampered": "./{}/mnli_train_easy_tampered.json".format(DATA_DIR),
-	"hard_tampered": "./{}/mnli_train_hard_tampered.json".format(DATA_DIR),
-	"easy_untampered": "./{}/mnli_train_easy_untampered.json".format(DATA_DIR),
-	"hard_untampered": "./{}/mnli_train_hard_untampered.json".format(DATA_DIR)
+	# "easy_tampered": "./{}/mnli_train_easy_tampered.json".format(DATA_DIR),
+	# "hard_tampered": "./{}/mnli_train_hard_tampered.json".format(DATA_DIR),
+	# "easy_untampered": "./{}/mnli_train_easy_untampered.json".format(DATA_DIR),
+	# "hard_untampered": "./{}/mnli_train_hard_untampered.json".format(DATA_DIR)
 }
 
 DATASETS = {"matched_test": MATCHED_TEST,
