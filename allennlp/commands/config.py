@@ -58,5 +58,5 @@ DATASETS = {"matched_test": MATCHED_TEST,
 		    "mismatched_dev": MISMATCHED_DEV,
 		    "mnli_train": MNLI_TRAIN}
 
-MNLI_C1 = {"archive_file": "./logs/c1_mnli/model.tar.gz"}
+MNLI_C1 = {"archive_file": "./final_logs/c1_mnli/model.tar.gz"}
 MODELS = {"c1_mnli": MNLI_C1}
