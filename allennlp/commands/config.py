@@ -1,4 +1,4 @@
-DATA_DIR = "test_run"
+DATA_DIR = "fresh_directory"
 
 
 MATCHED_TEST = {
