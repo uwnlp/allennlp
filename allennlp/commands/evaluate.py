@@ -71,7 +71,7 @@ class Evaluate(Subcommand):
                                help='a HOCON structure used to override the experiment configuration')
 
         subparser.set_defaults(func=evaluate_from_args)
-        subparser.add_argument('-s', '--subset', action='store_true', default=False)
+        subparser.add_argument('--c1', action='store_true', default=False)
         return subparser
 
 
@@ -91,7 +91,7 @@ def evaluate(model: Model,
         parsed_fields = []   
         inverse_label_map = {}
         for item in raw_fields:
-            premise = " ".join([x.text for x in item['premise'].tokens]).replace("@@NULL@@", '')
+            real_premise = " ".join([x.text for x in item['real_premise'].tokens]).replace("@@NULL@@", '')
             hypothesis = " ".join([x.text for x in item['hypothesis'].tokens]).replace("@@NULL@@", '')
             hypothesis_binary_parse = item["metadata_hypothesis_binary_parse"].metadata
             premise_binary_parse = item["metadata_premise_binary_parse"].metadata
@@ -108,12 +108,11 @@ def evaluate(model: Model,
             label = item['label'].label
             if item['label']._label_id not in inverse_label_map:
                 inverse_label_map.update({item['label']._label_id: item['label'].label})
-            parsed_fields.append({"sentence1": premise,
+            parsed_fields.append({"sentence1": real_premise,
                                   "sentence2": hypothesis,
                                   "gold_label": label,
                                   "genre": genre,
                                   "pairID": pair_id,
-                                  "real_premise": premise,
                                   "sentence1_parse": premise_parse,
                                   "sentence2_parse": hypothesis_parse,
                                   "sentence1_binary_parse": premise_binary_parse,
@@ -162,7 +161,7 @@ def evaluate_from_args(args: argparse.Namespace) -> Dict[str, Any]:
     dataset_reader = DatasetReader.from_params(config.pop('dataset_reader'))
     evaluation_data_path = args.evaluation_data_file
     logger.info("Reading evaluation data from %s", evaluation_data_path)
-    dataset = dataset_reader.read(evaluation_data_path)
+    dataset = dataset_reader.read(evaluation_data_path, args.c1)
     dataset.index_instances(model.vocab)
 
     iterator = DataIterator.from_params(config.pop("iterator"))
@@ -173,7 +172,7 @@ def evaluate_from_args(args: argparse.Namespace) -> Dict[str, Any]:
     logger.info("Metrics:")
     for key, metric in metrics.items():
         logger.info("%s: %s", key, metric)
-    if args.subset:
+    if args.c1:
         hard_subset.to_json("hard_subset.json", lines=True, orient='records')
         easy_subset.to_json("easy_subset.json", lines=True, orient='records')
     return metrics

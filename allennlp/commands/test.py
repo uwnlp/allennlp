@@ -18,15 +18,25 @@ if __name__ == '__main__':
 	parser.add_argument('--model')
 	parser.add_argument('--dataset')
 	parser.add_argument('--gpu')
+	parser.add_argument('--c1', action='store_true')
 	args = parser.parse_args()
 	gpu = 'CUDA_VISIBLE_DEVICES={}'.format(args.gpu)
 	archive_file = MODELS[args.model]['archive_file']
 	evaluation_data_file = DATASETS[args.dataset]['full_tampered']
-	command = [gpu,
-			   "python -m allennlp.run evaluate",
-			   "--archive-file",
-			   archive_file,
-			   "--evaluation-data-file",
-			   evaluation_data_file,
-			   "--subset"]
+	if args.c1:
+		command = [gpu,
+				   "python -m allennlp.run evaluate",
+				   "--archive-file",
+				   archive_file,
+				   "--evaluation-data-file",
+				   evaluation_data_file,
+				   "--c1"]
+	else:
+		command = [gpu,
+				   "python -m allennlp.run evaluate",
+				   "--archive-file",
+				   archive_file,
+				   "--evaluation-data-file",
+				   evaluation_data_file]
+
 	print(" ".join(command))

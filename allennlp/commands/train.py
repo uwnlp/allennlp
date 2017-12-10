@@ -52,6 +52,10 @@ class Train(Subcommand):
                                type=str,
                                help='path to parameter file describing the model to be trained')
 
+        subparser.add_argument('c1',
+                               action="store_true",
+                               help='c1 model')
+
         # This is necessary to preserve backward compatibility
         serialization = subparser.add_mutually_exclusive_group(required=True)
         serialization.add_argument('-s', '--serialization-dir',
@@ -60,6 +64,7 @@ class Train(Subcommand):
         serialization.add_argument('--serialization_dir',
                                    type=str,
                                    help=argparse.SUPPRESS)
+
 
         subparser.set_defaults(func=train_model_from_args)
 
@@ -70,10 +75,10 @@ def train_model_from_args(args: argparse.Namespace):
     """
     Just converts from an ``argparse.Namespace`` object to string paths.
     """
-    train_model_from_file(args.param_path, args.serialization_dir)
+    train_model_from_file(args.param_path, args.serialization_dir, args.c1)
 
 
-def train_model_from_file(parameter_filename: str, serialization_dir: str) -> Model:
+def train_model_from_file(parameter_filename: str, serialization_dir: str, c1: bool) -> Model:
     """
     A wrapper around :func:`train_model` which loads the params from a file.
 
@@ -86,10 +91,10 @@ def train_model_from_file(parameter_filename: str, serialization_dir: str) -> Mo
     """
     # Load the experiment config from a file and pass it to ``train_model``.
     params = Params.from_file(parameter_filename)
-    return train_model(params, serialization_dir)
+    return train_model(params, serialization_dir, c1)
 
 
-def train_model(params: Params, serialization_dir: str) -> Model:
+def train_model(params: Params, serialization_dir: str, c1: bool) -> Model:
     """
     This function can be used as an entry point to running models in AllenNLP
     directly from a JSON specification using a :class:`Driver`. Note that if
@@ -125,7 +130,7 @@ def train_model(params: Params, serialization_dir: str) -> Model:
 
     train_data_path = params.pop('train_data_path')
     logger.info("Reading training data from %s", train_data_path)
-    train_data = dataset_reader.read(train_data_path)
+    train_data = dataset_reader.read(train_data_path, c1)
 
     all_datasets: Dict[str, Dataset] = {"train": train_data}
 
