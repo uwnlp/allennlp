@@ -52,7 +52,7 @@ class Train(Subcommand):
                                type=str,
                                help='path to parameter file describing the model to be trained')
 
-        subparser.add_argument('c1',
+        subparser.add_argument('--c1',
                                action="store_true",
                                help='c1 model')
 
