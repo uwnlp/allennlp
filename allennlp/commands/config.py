@@ -31,6 +31,19 @@ MNLI_TRAIN = {
 	"full": "./{}/mnli_train_full.json".format(DATA_DIR),
 }
 
+MNLI_TRAIN_HALF_1 = {
+	"full": "./{}/mnli_train_half_1.json".format(DATA_DIR),
+	"easy": "./{}/mnli_train_half_1_easy.json".format(DATA_DIR),
+	"hard": "./{}/mnli_train_half_1_hard.json".format(DATA_DIR),
+}
+
+MNLI_TRAIN_HALF_2 = {
+	"full": "./{}/mnli_train_half_2.json".format(DATA_DIR),
+	"easy": "./{}/mnli_train_half_2_easy.json".format(DATA_DIR),
+	"hard": "./{}/mnli_train_half_2_hard.json".format(DATA_DIR),
+}
+
+
 SNLI_TEST = {
 	"original": "~/real_nli/data/multinli_0.9/multinli_0.9_test.jsonl", 
 	"full": "./{}/snli_test_full.json".format(DATA_DIR),
