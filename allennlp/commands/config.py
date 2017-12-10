@@ -31,6 +31,11 @@ MNLI_TRAIN = {
 	"full": "./{}/mnli_train_full.json".format(DATA_DIR),
 }
 
+SNLI_TRAIN = {
+	"original": "~/real_nli/data/snli_1.0/snli_1.0_train.jsonl", 
+	"full": "./{}/snli_train_full.json".format(DATA_DIR),
+}
+
 MNLI_TRAIN_HALF_1 = {
 	"full": "./{}/mnli_train_half_1.json".format(DATA_DIR),
 	"easy": "./{}/mnli_train_half_1_easy.json".format(DATA_DIR),
@@ -44,11 +49,24 @@ MNLI_TRAIN_HALF_2 = {
 }
 
 
+SNLI_TRAIN_HALF_1 = {
+	"full": "./{}/snli_train_half_1.json".format(DATA_DIR),
+	"easy": "./{}/snli_train_half_1_easy.json".format(DATA_DIR),
+	"hard": "./{}/snli_train_half_1_hard.json".format(DATA_DIR),
+}
+
+SNLI_TRAIN_HALF_2 = {
+	"full": "./{}/snli_train_half_2.json".format(DATA_DIR),
+	"easy": "./{}/snli_train_half_2_easy.json".format(DATA_DIR),
+	"hard": "./{}/snli_train_half_2_hard.json".format(DATA_DIR),
+}
+
+
 SNLI_TEST = {
 	"original": "~/real_nli/data/multinli_0.9/multinli_0.9_test.jsonl", 
 	"full": "./{}/snli_test_full.json".format(DATA_DIR),
 	"easy": "./{}/snli_test_easy.json".format(DATA_DIR),
-	"hard": "./{}/snlit_test_hard.json".format(DATA_DIR),
+	"hard": "./{}/snli_test_hard.json".format(DATA_DIR),
 }
 
 DATASETS = {"multinli_0.9_test_matched_unlabeled": MATCHED_TEST,
@@ -56,7 +74,8 @@ DATASETS = {"multinli_0.9_test_matched_unlabeled": MATCHED_TEST,
 		    "multinli_0.9_dev_matched": MATCHED_DEV,
 		    "multinli_0.9_dev_mismatched": MISMATCHED_DEV,
 		    "multinli_0.9_train": MNLI_TRAIN,
-		    "snli_1.0_test": SNLI_TEST}
+		    "snli_1.0_test": SNLI_TEST,
+		    "snli_1.0_train": SNLI_TRAIN}
 
 
 
