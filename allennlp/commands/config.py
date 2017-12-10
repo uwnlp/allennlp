@@ -61,9 +61,16 @@ SNLI_TRAIN_HALF_2 = {
 	"hard": "./{}/snli_train_half_2_hard.json".format(DATA_DIR),
 }
 
+SNLI_DEV = {
+	"original": "~/real_nli/data/snli_1.0/snli_1.0_dev.jsonl", 
+	"full": "./{}/snli_test_full.json".format(DATA_DIR),
+	"easy": "./{}/snli_test_easy.json".format(DATA_DIR),
+	"hard": "./{}/snli_test_hard.json".format(DATA_DIR),
+}
+
 
 SNLI_TEST = {
-	"original": "~/real_nli/data/multinli_0.9/multinli_0.9_test.jsonl", 
+	"original": "~/real_nli/data/snli_1.0/snli_1.0_test.jsonl", 
 	"full": "./{}/snli_test_full.json".format(DATA_DIR),
 	"easy": "./{}/snli_test_easy.json".format(DATA_DIR),
 	"hard": "./{}/snli_test_hard.json".format(DATA_DIR),
