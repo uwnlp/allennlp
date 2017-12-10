@@ -3,10 +3,12 @@ DATA_DIR = "fresh_directory"
 
 MATCHED_TEST = {
 	"original": "~/real_nli/data/multinli_1.0/multinli_0.9_test_matched_unlabeled.jsonl", 
+	"prediction_csv": "./{}/matched_predictions.csv".format(DATA_DIR)
 }
 
 MISMATCHED_TEST = {
 	"original": "~/real_nli/data/multinli_1.0/multinli_0.9_test_mismatched_unlabeled.jsonl", 
+	"prediction_csv": "./{}/mismatched_predictions.csv".format(DATA_DIR)
 }
 
 

@@ -143,7 +143,7 @@ def evaluate(model: Model,
                              | (output.prediction_score <= 0.4)]
     easy_subset = output.loc[(output.gold_label == output.prediction_label)
                              & (output.prediction_score > 0.4)]
-    return model.get_metrics(), hard_subset, easy_subset
+    return model.get_metrics(), output, hard_subset, easy_subset
 
 
 def evaluate_from_args(args: argparse.Namespace) -> Dict[str, Any]:
@@ -168,7 +168,7 @@ def evaluate_from_args(args: argparse.Namespace) -> Dict[str, Any]:
 
     iterator = DataIterator.from_params(config.pop("iterator"))
 
-    metrics, hard_subset, easy_subset = evaluate(model, dataset, iterator, args.cuda_device)
+    metrics, output, hard_subset, easy_subset = evaluate(model, dataset, iterator, args.cuda_device)
     
     logger.info("Finished evaluating.")
     logger.info("Metrics:")
@@ -178,4 +178,10 @@ def evaluate_from_args(args: argparse.Namespace) -> Dict[str, Any]:
     if args.c1 and DATASETS[ds].get("easy") is not None:
         hard_subset.to_json(DATASETS[ds]["hard"], lines=True, orient='records')
         easy_subset.to_json(DATASETS[ds]["easy"], lines=True, orient='records')
+    elif args.c1 and DATASETS[ds].get("easy") is None:
+        # unlabeled test
+        output.to_csv(DATASETS[ds]["prediction_csv"], index=False, sep = '\t')
+    else:
+        # sota
+        pass
     return metrics
