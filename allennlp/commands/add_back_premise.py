@@ -1,5 +1,5 @@
 import pandas as pd
-from config import *
+from allennlp.commands.config import *
 
 
 if __name__ == '__main__':
