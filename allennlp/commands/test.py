@@ -40,8 +40,9 @@ if __name__ == '__main__':
 				   evaluation_data_file]
 
 	print(" ".join(command))
-	easy_fp = DATASETS[args.dataset]['easy']
-	hard_fp = DATASETS[args.dataset]['hard']
+	if DATASETS[args.dataset].get('easy') is not None:
+		easy_fp = DATASETS[args.dataset]['easy']
+		hard_fp = DATASETS[args.dataset]['hard']
 	
-	print(" ".join(['mv', "easy_subset.json", easy_fp]))
-	print(" ".join(['mv', "hard_subset.json", hard_fp]))
+		print(" ".join(['mv', "easy_subset.json", easy_fp]))
+		print(" ".join(['mv', "hard_subset.json", hard_fp]))
