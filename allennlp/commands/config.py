@@ -75,7 +75,12 @@ DATASETS = {"multinli_0.9_test_matched_unlabeled": MATCHED_TEST,
 		    "multinli_0.9_dev_mismatched": MISMATCHED_DEV,
 		    "multinli_0.9_train": MNLI_TRAIN,
 		    "snli_1.0_test": SNLI_TEST,
-		    "snli_1.0_train": SNLI_TRAIN}
+		    "snli_1.0_train": SNLI_TRAIN,
+		    "mnli_train_half_1": MNLI_TRAIN_HALF_1,
+		    "mnli_train_half_2": MNLI_TRAIN_HALF_2,
+		    "snli_train_half_1": SNLI_TRAIN_HALF_1,
+		    "snli_train_half_2": SNLI_TRAIN_HALF_2
+		    }
 
 
 
