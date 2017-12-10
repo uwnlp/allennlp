@@ -1,6 +1,8 @@
 from allennlp.commands.config import *
 import argparse
 import os
+import subprocess
+
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Test and Subset')
 	parser.add_argument('--dataset')
