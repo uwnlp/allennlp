@@ -35,6 +35,7 @@ from allennlp.data.iterators import DataIterator
 from allennlp.models.archival import load_archive
 from allennlp.models.model import Model
 from allennlp.nn.util import arrays_to_variables
+from allennlp.commands.config import *
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
@@ -174,6 +175,7 @@ def evaluate_from_args(args: argparse.Namespace) -> Dict[str, Any]:
     for key, metric in metrics.items():
         logger.info("%s: %s", key, metric)
     if args.c1:
-        hard_subset.to_json("hard_subset.json", lines=True, orient='records')
-        easy_subset.to_json("easy_subset.json", lines=True, orient='records')
+        dataset = args.evaluation_data_file.split('/')[-1].split('.')[0]
+        hard_subset.to_json(os.path.join(DATA_DIR, DATASETS[dataset]["hard"]), lines=True, orient='records')
+        easy_subset.to_json(os.path.join(DATA_DIR, DATASETS[dataset]["easy"]), lines=True, orient='records')
     return metrics
