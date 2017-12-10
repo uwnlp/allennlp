@@ -1,4 +1,4 @@
-DATA_DIR = "fresh_directory_1"
+DATA_DIR = "fresh_directory"
 
 
 MATCHED_TEST = {
@@ -31,11 +31,21 @@ MNLI_TRAIN = {
 	"full": "./{}/mnli_train_full.json".format(DATA_DIR),
 }
 
+SNLI_TEST = {
+	"original": "~/real_nli/data/multinli_0.9/multinli_0.9_test.jsonl", 
+	"full": "./{}/snli_test_full.json".format(DATA_DIR),
+	"easy": "./{}/snli_test_easy.json".format(DATA_DIR),
+	"hard": "./{}/snlit_test_hard.json".format(DATA_DIR),
+}
+
 DATASETS = {"multinli_0.9_test_matched_unlabeled": MATCHED_TEST,
 		    "multinli_0.9_test_mismatched_unlabeled": MISMATCHED_TEST,
 		    "multinli_0.9_dev_matched": MATCHED_DEV,
 		    "multinli_0.9_dev_mismatched": MISMATCHED_DEV,
-		    "multinli_0.9_train": MNLI_TRAIN}
+		    "multinli_0.9_train": MNLI_TRAIN,
+		    "snli_1.0_test": SNLI_TEST}
+
+
 
 MNLI_C1 = {"archive_file": "./final_logs/c1-mnli/model.tar.gz"}
 MODELS = {"c1-mnli": MNLI_C1}
