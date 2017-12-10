@@ -19,7 +19,7 @@ if __name__ == '__main__':
 			   evaluation_data_file,
 			   "--subset"]
 	print(command)
-	subprocess.run(command)
+	subprocess.run(command, shell=True)
 	easy_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['easy_file'])
 	hard_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['hard_file'])
 	subprocess.Popen(['mv', "easy_subset.json", easy_fp])
