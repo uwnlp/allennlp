@@ -11,13 +11,14 @@ if __name__ == '__main__':
 	gpu = 'CUDA_VISIBLE_DEVICES={}'.format(args.gpu)
 	archive_file = MODELS[args.model]['archive_file']
 	evaluation_data_file = DATASETS[args.dataset]['full_tampered']
-	subprocess.Popen([gpu,
-					  "python -m allennlp.run evaluate",
-					  "--archive-file",
-					  archive_file,
-					  "--evaluation-data-file",
-					  evaluation_data_file,
-					  "--subset"])
+	command = [gpu,
+			   "python -m allennlp.run evaluate",
+			   "--archive-file",
+			   archive_file,
+			   "--evaluation-data-file",
+			   evaluation_data_file,
+			   "--subset"]
+	subprocess.Popen(command)
 	easy_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['easy_file'])
 	hard_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['hard_file'])
 	subprocess.Popen(['mv', "easy_subset.json", easy_fp])
