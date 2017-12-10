@@ -11,7 +11,7 @@
         "end_tokens": ["@@NULL@@"]
       }
     },
-    "train_data_path": "/home/sg01/allennlp/fresh_directory/mnli_train_random_easy_size.json",
+    "train_data_path": "/home/sg01/allennlp/fresh_directory/mnli_random_easy_size.jsonl",
     "validation_data_path": "~/real_nli/data/multinli_0.9/multinli_0.9_dev_matched.json",
     "model": {
       "type": "decomposable_attention",
