@@ -4,7 +4,6 @@ from allennlp.commands.config import *
 
 if __name__ == '__main__':
 	for dataset in DATASETS:
-		import ipdb; ipdb.set_trace()
 		if DATASETS[dataset].get('easy_tampered') is not None:
 			df = pd.read_json(DATASETS[dataset]['easy_tampered'], lines=True)
 			df = df.rename(columns={'sentence1': 'null_token'})
