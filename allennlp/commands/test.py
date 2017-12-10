@@ -21,6 +21,7 @@ if __name__ == '__main__':
 			   "--subset"]
 	p = Popen(command, stdout=PIPE, stderr=PIPE)
 	stdout, stderr = p.communicate()
+	import ipdb; ipdb.set_trace()
 	easy_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['easy_tampered'])
 	hard_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['hard_tampered'])
 	subprocess.Popen(['mv', "easy_subset.json", easy_fp])
