@@ -3,7 +3,7 @@ from allennlp.commands.config import *
 
 
 if __name__ == '__main__':
-	df = pd.read_json(DATASETS["mnli_train"]['original'], lines=True)
+	df = pd.read_json(DATASETS["multinli_0.9_train"]['original'], lines=True)
 	df = df.sample(frac=1)
 	half_size = int(df.shape[0]/2)
 	half_1 = df.head(n=half_size)
