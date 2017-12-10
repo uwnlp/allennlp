@@ -29,17 +29,4 @@ if __name__ == '__main__':
 			   "--evaluation-data-file",
 			   evaluation_data_file,
 			   "--subset"]
-	p = Popen(command, stdout=PIPE, stderr=PIPE, shell=True)
-
-	for path in execute(command):
-		print(path, end="")
-
-	# while p.poll() is None:
-	#     l = p.stdout.readline() # This blocks until it receives a newline.
-	#     print(l)
-	# print(p.stdout.read())
-	import ipdb; ipdb.set_trace()
-	easy_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['easy_tampered'])
-	hard_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['hard_tampered'])
-	subprocess.Popen(['mv', "easy_subset.json", easy_fp])
-	subprocess.Popen(['mv', "hard_subset.json", hard_fp])
+	print(command)
