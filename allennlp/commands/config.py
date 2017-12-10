@@ -3,8 +3,8 @@ DATA_DIR = "test_run"
 
 MATCHED_TEST = {
 	"original": "~/real_nli/data/multinli_1.0/multinli_0.9_test_matched_unlabeled.jsonl", 
-	"tampered": "./{}/matched_test_full_tampered.json".format(DATA_DIR),
-	"untampered": "./{}/matched_test_full_untampered.json".format(DATA_DIR),
+	"full_tampered": "./{}/matched_test_full_tampered.json".format(DATA_DIR),
+	"full_untampered": "./{}/matched_test_full_untampered.json".format(DATA_DIR),
 	"easy_tampered": "./{}/matched_test_easy_tampered.json".format(DATA_DIR),
 	"hard_tampered": "./{}/matched_test_hard_tampered.json".format(DATA_DIR),
 	"easy_untampered": "./{}/matched_test_easy_untampered.json".format(DATA_DIR),
@@ -13,8 +13,8 @@ MATCHED_TEST = {
 
 MISMATCHED_TEST = {
 	"original": "~/real_nli/data/multinli_1.0/multinli_0.9_test_mismatched_unlabeled.jsonl", 
-	"tampered": "./{}/mismatched_test_full_tampered.json".format(DATA_DIR),
-	"untampered": "./{}/mismatched_test_full_untampered.json".format(DATA_DIR),
+	"full_tampered": "./{}/mismatched_test_full_tampered.json".format(DATA_DIR),
+	"full_untampered": "./{}/mismatched_test_full_untampered.json".format(DATA_DIR),
 	"easy_tampered": "./{}/mismatched_test_easy_tampered.json".format(DATA_DIR),
 	"hard_tampered": "./{}/mismatched_test_hard_tampered.json".format(DATA_DIR),
 	"easy_untampered": "./{}/mismatched_test_easy_untampered.json".format(DATA_DIR),
