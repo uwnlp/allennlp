@@ -20,7 +20,10 @@ if __name__ == '__main__':
 			   evaluation_data_file,
 			   "--subset"]
 	p = Popen(command, stdout=PIPE, stderr=PIPE, shell=True)
-	stdout, stderr = p.communicate()
+	while p.poll() is None:
+	    l = p.stdout.readline() # This blocks until it receives a newline.
+	    print 
+	print p.stdout.read()
 	import ipdb; ipdb.set_trace()
 	easy_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['easy_tampered'])
 	hard_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['hard_tampered'])
