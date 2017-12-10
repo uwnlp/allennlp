@@ -29,11 +29,11 @@ MNLI_TRAIN = {
 	"full": "./{}/mnli_train_full.json".format(DATA_DIR),
 }
 
-DATASETS = {"matched_test": MATCHED_TEST,
-		    "mismatched_test": MISMATCHED_TEST,
-		    "matched_dev": MATCHED_DEV,
-		    "mismatched_dev": MISMATCHED_DEV,
-		    "mnli_train": MNLI_TRAIN}
+DATASETS = {"multinli_0.9_test_matched_unlabeled": MATCHED_TEST,
+		    "multinli_0.9_test_mismatched_unlabeled": MISMATCHED_TEST,
+		    "multinli_0.9_dev_matched": MATCHED_DEV,
+		    "multinli_0.9_dev_mismatched": MISMATCHED_DEV,
+		    "multinli_0.9_train": MNLI_TRAIN}
 
 MNLI_C1 = {"archive_file": "./final_logs/c1-mnli/model.tar.gz"}
 MODELS = {"c1-mnli": MNLI_C1}

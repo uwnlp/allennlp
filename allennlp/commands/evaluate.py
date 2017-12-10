@@ -175,7 +175,7 @@ def evaluate_from_args(args: argparse.Namespace) -> Dict[str, Any]:
     for key, metric in metrics.items():
         logger.info("%s: %s", key, metric)
     if args.c1:
-        dataset = args.evaluation_data_file.split('/')[-1][:-4]
-        hard_subset.to_json(os.path.join(DATA_DIR, DATASETS[dataset]["hard"]), lines=True, orient='records')
-        easy_subset.to_json(os.path.join(DATA_DIR, DATASETS[dataset]["easy"]), lines=True, orient='records')
+        dataset = args.evaluation_data_file.split('/')[-1][:-6]
+        hard_subset.to_json(DATASETS[dataset]["hard"], lines=True, orient='records')
+        easy_subset.to_json(DATASETS[dataset]["easy"], lines=True, orient='records')
     return metrics
