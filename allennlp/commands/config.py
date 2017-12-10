@@ -14,66 +14,60 @@ MISMATCHED_TEST = {
 
 MATCHED_DEV = {
 	"original": "~/real_nli/data/multinli_0.9/multinli_0.9_dev_matched.jsonl", 
-	"full": "./{}/matched_dev_full.json".format(DATA_DIR),
-	"easy": "./{}/matched_dev_easy.json".format(DATA_DIR),
-	"hard": "./{}/matched_dev_hard.json".format(DATA_DIR),
+	"easy": "./{}/matched_dev_easy.jsonl".format(DATA_DIR),
+	"hard": "./{}/matched_dev_hard.jsonl".format(DATA_DIR),
 }
 
 MISMATCHED_DEV = {
 	"original": "~/real_nli/data/multinli_0.9/multinli_0.9_dev_mismatched.jsonl", 
-	"full": "./{}/mismatched_dev_full.json".format(DATA_DIR),
-	"easy": "./{}/mismatched_dev_easy.json".format(DATA_DIR),
-	"hard": "./{}/mismatched_dev_hard.json".format(DATA_DIR),
+	"easy": "./{}/mismatched_dev_easy.jsonl".format(DATA_DIR),
+	"hard": "./{}/mismatched_dev_hard.jsonl".format(DATA_DIR),
 }
 
 MNLI_TRAIN = {
 	"original": "~/real_nli/data/multinli_0.9/multinli_0.9_train.jsonl", 
-	"full": "./{}/mnli_train_full.json".format(DATA_DIR),
 }
 
 SNLI_TRAIN = {
 	"original": "~/real_nli/data/snli_1.0/snli_1.0_train.jsonl", 
-	"full": "./{}/snli_train_full.json".format(DATA_DIR),
 }
 
 MNLI_TRAIN_HALF_1 = {
-	"full": "./{}/mnli_train_half_1.json".format(DATA_DIR),
-	"easy": "./{}/mnli_train_half_1_easy.json".format(DATA_DIR),
-	"hard": "./{}/mnli_train_half_1_hard.json".format(DATA_DIR),
+	"original": "./{}/mnli_train_half_1.jsonl".format(DATA_DIR),
+	"easy": "./{}/mnli_train_half_1_easy.jsonl".format(DATA_DIR),
+	"hard": "./{}/mnli_train_half_1_hard.jsonl".format(DATA_DIR),
 }
 
 MNLI_TRAIN_HALF_2 = {
-	"full": "./{}/mnli_train_half_2.json".format(DATA_DIR),
-	"easy": "./{}/mnli_train_half_2_easy.json".format(DATA_DIR),
-	"hard": "./{}/mnli_train_half_2_hard.json".format(DATA_DIR),
+	"original": "./{}/mnli_train_half_2.jsonl".format(DATA_DIR),
+	"easy": "./{}/mnli_train_half_2_easy.jsonl".format(DATA_DIR),
+	"hard": "./{}/mnli_train_half_2_hard.jsonl".format(DATA_DIR),
 }
 
 
 SNLI_TRAIN_HALF_1 = {
-	"full": "./{}/snli_train_half_1.json".format(DATA_DIR),
-	"easy": "./{}/snli_train_half_1_easy.json".format(DATA_DIR),
-	"hard": "./{}/snli_train_half_1_hard.json".format(DATA_DIR),
+	"original": "./{}/snli_train_half_1.jsonl".format(DATA_DIR),
+	"easy": "./{}/snli_train_half_1_easy.jsonl".format(DATA_DIR),
+	"hard": "./{}/snli_train_half_1_hard.jsonl".format(DATA_DIR),
 }
 
 SNLI_TRAIN_HALF_2 = {
-	"full": "./{}/snli_train_half_2.json".format(DATA_DIR),
-	"easy": "./{}/snli_train_half_2_easy.json".format(DATA_DIR),
-	"hard": "./{}/snli_train_half_2_hard.json".format(DATA_DIR),
+	"original": "./{}/snli_train_half_2.jsonl".format(DATA_DIR),
+	"easy": "./{}/snli_train_half_2_easy.jsonl".format(DATA_DIR),
+	"hard": "./{}/snli_train_half_2_hard.jsonl".format(DATA_DIR),
 }
 
 SNLI_DEV = {
 	"original": "~/real_nli/data/snli_1.0/snli_1.0_dev.jsonl", 
-	"full": "./{}/snli_test_full.json".format(DATA_DIR),
-	"easy": "./{}/snli_test_easy.json".format(DATA_DIR),
-	"hard": "./{}/snli_test_hard.json".format(DATA_DIR),
+	"easy": "./{}/snli_dev_easy.jsonl".format(DATA_DIR),
+	"hard": "./{}/snli_dev_hard.jsonl".format(DATA_DIR),
 }
 
 
 SNLI_TEST = {
 	"original": "~/real_nli/data/snli_1.0/snli_1.0_test.jsonl", 
-	"full": "./{}/snli_test_full.json".format(DATA_DIR),
-	"easy": "./{}/snli_test_easy.json".format(DATA_DIR),
-	"hard": "./{}/snli_test_hard.json".format(DATA_DIR),
+	"easy": "./{}/snli_test_easy.jsonl".format(DATA_DIR),
+	"hard": "./{}/snli_test_hard.jsonl".format(DATA_DIR),
 }
 
 DATASETS = {"multinli_0.9_test_matched_unlabeled": MATCHED_TEST,
@@ -82,6 +76,7 @@ DATASETS = {"multinli_0.9_test_matched_unlabeled": MATCHED_TEST,
 		    "multinli_0.9_dev_mismatched": MISMATCHED_DEV,
 		    "multinli_0.9_train": MNLI_TRAIN,
 		    "snli_1.0_test": SNLI_TEST,
+		    "snli_1.0_dev": SNLI_DEV,
 		    "snli_1.0_train": SNLI_TRAIN,
 		    "mnli_train_half_1": MNLI_TRAIN_HALF_1,
 		    "mnli_train_half_2": MNLI_TRAIN_HALF_2,
@@ -91,7 +86,16 @@ DATASETS = {"multinli_0.9_test_matched_unlabeled": MATCHED_TEST,
 
 
 
-MNLI_C1 = {"archive_file": "./final_logs/c1-mnli/model.tar.gz"}
-SNLI_C1 = {"archive_file": "./final_logs/c1-snli/model.tar.gz"}
+C1_MNLI = {"archive_file": "./final_logs/c1-mnli/model.tar.gz"}
+C1_SNLI = {"archive_file": "./final_logs/c1-snli/model.tar.gz"}
+C1_MNLI_HALF_1 = {"archive_file": "./final_logs/c1-mnli-half-1/model.tar.gz"}
+C1_MNLI_HALF_2 = {"archive_file": "./final_logs/c1-mnli-half-2/model.tar.gz"}
+C1_SNLI_HALF_1 = {"archive_file": "./final_logs/c1-snli-half-1/model.tar.gz"}
+C1_SNLI_HALF_2 = {"archive_file": "./final_logs/c1-snli-half-2/model.tar.gz"}
 
-MODELS = {"c1-mnli": MNLI_C1, "c1-snli": SNLI_C1}
+MODELS = {"c1-mnli": C1_MNLI,
+		  "c1-snli": C1_SNLI,
+		  "c1-mnli-half-1": C1_MNLI_HALF_1,
+		  "c1-mnli-half-2": C1_MNLI_HALF_2,
+		  "c1-snli-half-1": C1_SNLI_HALF_1,
+		  "c1-snli-half-2": C1_SNLI_HALF_2}
