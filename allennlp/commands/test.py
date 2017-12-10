@@ -9,8 +9,8 @@ if __name__ == '__main__':
 	parser.add_argument('--gpu')
 	args = parser.parse_args()
 	gpu = 'CUDA_VISIBLE_DEVICES={}'.format(args.gpu)
-	archive_file = config[args.model]['archive_file']
-	evaluation_data_file = config[args.dataset]['tampered']
+	archive_file = MODELS[args.model]['archive_file']
+	evaluation_data_file = DATASETS[args.dataset]['full_tampered']
 	subprocess.Popen([gpu,
 					  "python -m allennlp.run evaluate",
 					  "--archive-file",
@@ -18,7 +18,7 @@ if __name__ == '__main__':
 					  "--evaluation-data-file",
 					  evaluation_data_file,
 					  "--subset"])
-	easy_fp = os.path.join(DATA_DIR, EASY_FILE)
-	hard_fp = os.path.join(DATA_DIR, HARD_FILE)
+	easy_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['easy_file'])
+	hard_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['hard_file'])
 	subprocess.Popen(['mv', "easy_subset.json", easy_fp])
 	subprocess.Popen(['mv', "hard_subset.json", hard_fp])
