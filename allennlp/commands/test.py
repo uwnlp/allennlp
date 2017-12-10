@@ -19,7 +19,7 @@ if __name__ == '__main__':
 			   "--evaluation-data-file",
 			   evaluation_data_file,
 			   "--subset"]
-	p = Popen(command, stdout=PIPE, stderr=PIPE)
+	p = Popen(command, stdout=PIPE, stderr=PIPE, shell=True)
 	stdout, stderr = p.communicate()
 	import ipdb; ipdb.set_trace()
 	easy_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['easy_tampered'])
