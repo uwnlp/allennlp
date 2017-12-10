@@ -43,6 +43,5 @@ if __name__ == '__main__':
 	if DATASETS[args.dataset].get('easy') is not None:
 		easy_fp = DATASETS[args.dataset]['easy']
 		hard_fp = DATASETS[args.dataset]['hard']
-	
 		print(" ".join(['mv', "easy_subset.json", easy_fp]))
 		print(" ".join(['mv', "hard_subset.json", hard_fp]))

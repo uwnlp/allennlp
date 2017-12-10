@@ -87,6 +87,7 @@ def evaluate(model: Model,
     generator_tqdm = tqdm.tqdm(generator, total=iterator.get_num_batches(dataset))
     output = pd.DataFrame()
     inverse_label_map = {}
+
     for raw_batch, batch in generator_tqdm:
         raw_fields = [x.fields for x in raw_batch.instances]
         parsed_fields = []   
@@ -173,7 +174,7 @@ def evaluate_from_args(args: argparse.Namespace) -> Dict[str, Any]:
     logger.info("Metrics:")
     for key, metric in metrics.items():
         logger.info("%s: %s", key, metric)
-    if args.c1:
+    if args.c1 and DATASETS[dataset].get("easy") is not None:
         dataset = args.evaluation_data_file.split('/')[-1][:-6]
         hard_subset.to_json(DATASETS[dataset]["hard"], lines=True, orient='records')
         easy_subset.to_json(DATASETS[dataset]["easy"], lines=True, orient='records')
