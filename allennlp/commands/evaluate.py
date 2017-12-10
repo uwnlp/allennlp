@@ -91,7 +91,6 @@ def evaluate(model: Model,
     for raw_batch, batch in generator_tqdm:
         raw_fields = [x.fields for x in raw_batch.instances]
         parsed_fields = []   
-        inverse_label_map = {}
         for item in raw_fields:
             real_premise = " ".join([x.text for x in item['real_premise'].tokens]).replace("@@NULL@@", '')
             hypothesis = " ".join([x.text for x in item['hypothesis'].tokens]).replace("@@NULL@@", '')
