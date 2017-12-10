@@ -18,6 +18,7 @@ if __name__ == '__main__':
 			   "--evaluation-data-file",
 			   evaluation_data_file,
 			   "--subset"]
+	print(command)
 	subprocess.run(command)
 	easy_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['easy_file'])
 	hard_fp = os.path.join(DATA_DIR, DATASETS[args.dataset]['hard_file'])
