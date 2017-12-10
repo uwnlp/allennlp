@@ -8,3 +8,8 @@ if __name__ == '__main__':
 		df = df.rename(columns={'sentence1':'real_premise'})
 		df['sentence1'] = ['<NULL>'] * df.shape[0]
 		df.to_json(DATASETS[dataset]['full_tampered'], lines=True, orient='records')
+		df = df.rename(columns={'sentence1': 'null_token'})
+		df = df.rename(columns={'real_premise': 'sentence1'})
+		master.to_json(DATASETS[dataset]['full_untampered'], lines=True, orient='records')
+
+	
