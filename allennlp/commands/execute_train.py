@@ -2,6 +2,7 @@ import subprocess
 import argparse
 import json
 from allennlp.commands.config import *
+import pandas as pd
 
 base_config = {
     "dataset_reader": {
