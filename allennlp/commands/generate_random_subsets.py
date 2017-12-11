@@ -1,5 +1,6 @@
 import pandas as pd
 from allennlp.commands.config import *
+import argparse
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='concat hard and easy train halfs')
