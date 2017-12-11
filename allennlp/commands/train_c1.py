@@ -167,6 +167,7 @@ if __name__ == '__main__':
 
     now = arrow.utcnow()
     log_file = './execute_train_logs/{}_{}_{}_{}.log'.format(args.corpus, args.split, args.half, now)
+    print(" ".join(command))
     with open(log_file, 'w+') as f:
         if split_log:
             f.write(split_log + '\n')
