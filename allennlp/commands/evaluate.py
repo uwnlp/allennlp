@@ -176,6 +176,7 @@ def evaluate_from_args(args: argparse.Namespace) -> Dict[str, Any]:
     for key, metric in metrics.items():
         logger.info("%s: %s", key, metric)
     ds = args.evaluation_data_file.split('/')[-1][:-6]
+    import ipdb; ipdb.set_trace()
     if args.c1 and DATASETS[ds].get("easy") is not None:
         hard_subset.to_json(DATASETS[ds]["hard"], lines=True, orient='records')
         easy_subset.to_json(DATASETS[ds]["easy"], lines=True, orient='records')
