@@ -94,6 +94,7 @@ def evaluate(model: Model,
         for item in raw_fields:
             real_premise = " ".join([x.text for x in item['real_premise'].tokens]).replace("@@NULL@@", '')
             hypothesis = " ".join([x.text for x in item['hypothesis'].tokens]).replace("@@NULL@@", '')
+            import ipdb; ipdb.set_trace()
             hypothesis_binary_parse = item["metadata_hypothesis_binary_parse"].metadata
             premise_binary_parse = item["metadata_premise_binary_parse"].metadata
             hypothesis_parse = item["metadata_hypothesis_parse"].metadata
