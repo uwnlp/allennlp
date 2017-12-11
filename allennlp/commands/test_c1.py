@@ -18,7 +18,6 @@ def execute(cmd):
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Test and Subset')
-	args = parser.parse_args()
 	parser.add_argument('--model')
 	parser.add_argument('--gpu')
 	args = parser.parse_args()
