@@ -3,6 +3,7 @@ import argparse
 def execute(cmd):
     popen = subprocess.Popen(cmd,
                              stdout=subprocess.PIPE,
+                             shell=True,
                              universal_newlines=True)
     for stdout_line in iter(popen.stdout.readline, ""):
         yield stdout_line 
