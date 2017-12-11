@@ -91,6 +91,7 @@ def make_splits(corpus):
     half_size = int(df.shape[0]/2)
     half_1 = df.head(n=half_size)
     half_2 = df.tail(n=half_size)
+    import ipdb; ipdb.set_trace()
     half_1.to_json(DATASETS[half_1]['original'], lines=True, orient='records')
     half_2.to_json(DATASETS[half_2]['original'], lines=True, orient='records')
 
@@ -114,6 +115,7 @@ if __name__ == '__main__':
     parser.add_argument('--gpu', choices=[0, 1, 2], type=int)
     args = parser.parse_args()
     if args.split == 'half':
+        print("splitting...")
         make_splits(args.corpus)
     if args.corpus == 'mnli' and args.split == 'full':
         model_name = "multinli_0.9_train"
