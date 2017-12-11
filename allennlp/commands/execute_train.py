@@ -13,10 +13,10 @@ def execute(cmd):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Execute training')
-    parser.add_argument('--corpus', choice=['mnli', 'snli'], type=str)
-    parser.add_argument('--split', choice=['half', 'full'], type=str)
-    parser.add_argument('--half', choice=[0, 1, 2], type=int, default=0)
-    parser.add_argument('--gpu', choice=[0, 1, 2], type=int)
+    parser.add_argument('--corpus', choices=['mnli', 'snli'], type=str)
+    parser.add_argument('--split', choices=['half', 'full'], type=str)
+    parser.add_argument('--half', choices=[0, 1, 2], type=int, default=0)
+    parser.add_argument('--gpu', choices=[0, 1, 2], type=int)
 
     config_file = "/home/sg01/allennlp/training_config/c1_train_configs/{}_{}_{}".format(args.corpus, args.split, args.half)
     if args.corpus == 'mnli' and args.split == 'full':
