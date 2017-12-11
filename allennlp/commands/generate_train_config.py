@@ -77,6 +77,7 @@ if __name__ == '__main__':
   parser.add_argument('--corpus', choices=['mnli', 'snli'], type=str)
   parser.add_argument('--split', choices=['half', 'full'], type=str)
   parser.add_argument('--half', choices=[0, 1, 2], type=int, default=0)
+  args = parser.parse_args()
   if args.corpus == 'mnli' and args.split == 'full':
     base_config['train_data_path'] = "multinli_0.9_train"
     base_config['validation_data_path'] = "multinli_0.9_dev_matched"
