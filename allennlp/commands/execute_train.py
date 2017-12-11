@@ -19,7 +19,7 @@ if __name__ == '__main__':
     parser.add_argument('--half', choices=[0, 1, 2], type=int, default=0)
     parser.add_argument('--gpu', choices=[0, 1, 2], type=int)
     args = parser.parse_args()
-    config_file = "/home/sg01/allennlp/training_config/c1_train_configs/{}_{}_{}".format(args.corpus, args.split, args.half)
+    config_file = "/home/sg01/allennlp/training_config/c1_train_configs/{}_{}_{}.json".format(args.corpus, args.split, args.half)
     if args.corpus == 'mnli' and args.split == 'full':
         model_name = "multinli_0.9_train"
     elif args.corpus == 'mnli' and args.split == 'half':
