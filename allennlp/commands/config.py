@@ -1,4 +1,4 @@
-DATA_DIR = "/home/sg01/allennlp/fresh_directory"
+DATA_DIR = "/home/sg01/allennlp/final_data"
 
 
 MATCHED_TEST = {

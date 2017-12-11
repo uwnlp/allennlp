@@ -91,6 +91,7 @@ def make_splits(corpus):
     half_size = int(df.shape[0]/2)
     df_half_1 = df.head(n=half_size)
     df_half_2 = df.tail(n=half_size)
+    print("SIZE OF HALVES:{} // TOTAL_SIZE: {}".format(half_size, df.shape[0]))
     df_half_1.to_json(DATASETS[half_1]['original'], lines=True, orient='records')
     df_half_2.to_json(DATASETS[half_2]['original'], lines=True, orient='records')
 
@@ -161,6 +162,9 @@ if __name__ == '__main__':
                "--serialization-dir",
                serialization_dir,
                "--c1"]
+    print("TRAIN_DATA_PATH: {}".format(base_config['train_data_path']))
+    print("VALIDATION_DATA_PATH: {}".format(base_config['validation_data_path']))
+    print("CONFIG_FILE: {}".format(CONFIG))
     print(" ".join(command))
     for path in execute(command):
         print(path, end="")
