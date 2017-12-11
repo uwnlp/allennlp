@@ -10,10 +10,13 @@ if __name__ == '__main__':
 		train = MNLI_TRAIN
 	elif args.corpus == 'snli':
 		train = SNLI_TRAIN
+	print("reading data...")
 	hard_df = pd.read_json(train['hard'], lines=True)                                                                                
 	easy_df = pd.read_json(train['easy'], lines=True)
 	train_df = pd.read_json(train['original'], lines=True)
+	print("subsetting...")
 	random_hard = train_df.sample(n=hard_df.shape[0], random_state=1)
 	random_easy = train_df.sample(n=easy_df.shape[0], random_state=1)         
 	random_hard.to_json('{}/{}_random_hard.jsonl'.format(DATA_DIR, args.corpus), lines=True, orient='records')
 	random_easy.to_json('{}/{}_random_easy.jsonl'.format(DATA_DIR, args.corpus), lines=True, orient='records')
+	print("done!")
