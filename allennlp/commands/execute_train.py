@@ -89,11 +89,10 @@ def make_splits(corpus):
     df = pd.read_json(DATASETS[dataset]['original'], lines=True)
     df = df.sample(frac=1, random_state=1)
     half_size = int(df.shape[0]/2)
-    half_1 = df.head(n=half_size)
-    half_2 = df.tail(n=half_size)
-    import ipdb; ipdb.set_trace()
-    half_1.to_json(DATASETS[half_1]['original'], lines=True, orient='records')
-    half_2.to_json(DATASETS[half_2]['original'], lines=True, orient='records')
+    df_half_1 = df.head(n=half_size)
+    df_half_2 = df.tail(n=half_size)
+    df_half_1.to_json(DATASETS[half_1]['original'], lines=True, orient='records')
+    df_half_2.to_json(DATASETS[half_2]['original'], lines=True, orient='records')
 
 def execute(cmd):
     popen = subprocess.Popen(cmd,
