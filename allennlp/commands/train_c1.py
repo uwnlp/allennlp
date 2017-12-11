@@ -115,6 +115,7 @@ if __name__ == '__main__':
     parser.add_argument('--half', choices=[0, 1, 2], type=int, default=0)
     parser.add_argument('--gpu', choices=[0, 1, 2], type=int)
     args = parser.parse_args()
+    split_log = ""
     if args.split == 'half':
         print("splitting...")
         split_log = make_splits(args.corpus)
@@ -169,7 +170,7 @@ if __name__ == '__main__':
     log_file = './execute_train_logs/{}_{}_{}_{}.log'.format(args.corpus, args.split, args.half, now)
     with open(log_file, 'w+') as f:
         if split_log:
-            f.write(split_log)
+            f.write(split_log + '\n')
         f.write(" ".join(command)+ "\n")
         f.write("ARGS: {} {} {}\n".format(args.corpus, args.split, args.half))
         f.write("TRAIN_DATA_PATH: {}\n".format(base_config['train_data_path']))
