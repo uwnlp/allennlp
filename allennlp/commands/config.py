@@ -26,10 +26,14 @@ MISMATCHED_DEV = {
 
 MNLI_TRAIN = {
 	"original": "/home/sg01/real_nli/data/multinli_0.9/multinli_0.9_train.jsonl", 
+	"hard": "{}/mnli_train_hard.jsonl".format(DATA_DIR),
+	"easy": "{}/mnli_train_easy.jsonl".format(DATA_DIR)
 }
 
 SNLI_TRAIN = {
-	"original": "/home/sg01/real_nli/data/snli_1.0/snli_1.0_train.jsonl", 
+	"original": "/home/sg01/real_nli/data/snli_1.0/snli_1.0_train.jsonl",
+	"hard": "{}/snli_train_hard.jsonl".format(DATA_DIR),
+	"easy": "{}/snli_train_easy.jsonl".format(DATA_DIR)
 }
 
 MNLI_TRAIN_HALF_1 = {
