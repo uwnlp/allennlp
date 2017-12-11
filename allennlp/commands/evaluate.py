@@ -86,8 +86,8 @@ def evaluate(model: Model,
     logger.info("Iterating over dataset")
     generator_tqdm = tqdm.tqdm(generator, total=iterator.get_num_batches(dataset))
     output = pd.DataFrame()
-    inverse_label_map = {1: 'contradiction', 0: 'entailment', 2: 'neutral'}
-
+    # inverse_label_map = {1: 'contradiction', 0: 'entailment', 2: 'neutral'}
+    inverse_label_map = {}
     for raw_batch, batch in generator_tqdm:
         raw_fields = [x.fields for x in raw_batch.instances]
         parsed_fields = []   
@@ -107,7 +107,8 @@ def evaluate(model: Model,
             else:
                 genre = None
             label = item['label'].label
-
+            if item['label']._label_id not in inverse_label_map:
+                inverse_label_map.update({item['label']._label_id: item['label'].label})
             parsed_fields.append({"sentence1": real_premise,
                                   "sentence2": hypothesis,
                                   "gold_label": label,
