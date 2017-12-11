@@ -1,6 +1,7 @@
 import subprocess
 import argparse
 import json
+from allennlp.commands.config import *
 
 base_config = {
     "dataset_reader": {
