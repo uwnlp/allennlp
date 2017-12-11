@@ -47,6 +47,7 @@ if __name__ == '__main__':
                "--serialization-dir",
                serialization_dir,
                "--c1"]
-    print(command)
+
+    print(" ".join(command))
     for path in execute(command):
         print(path, end="")
