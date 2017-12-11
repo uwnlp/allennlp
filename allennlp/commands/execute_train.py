@@ -125,6 +125,8 @@ if __name__ == '__main__':
             raise Exception("invalid argument")
     else:
         raise Exception("invalid argument") 
+    base_config['train_data_path'] = DATASETS[base_config['train_data_path']]['original']
+    base_config['validation_data_path'] = DATASETS[base_config['validation_data_path']]['original']
     config_file = "/home/sg01/allennlp/training_config/c1_train_configs/{}_{}_{}.json".format(args.corpus, args.split, args.half)
     with open(config_file, 'w+') as f:
         out = json.dumps(base_config)
