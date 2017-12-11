@@ -87,31 +87,31 @@ DATASETS = {"multinli_0.9_test_matched_unlabeled": MATCHED_TEST,
 
 
 C1_MNLI = {
-	"model_name": "c1-mnli"
+	"model_name": "c1-mnli",
 	"archive_file": "{}/c1-mnli/model.tar.gz".format(MODEL_DIR)
 }
 
 C1_SNLI = {
-	"model_name": "c1-snli"
+	"model_name": "c1-snli",
 	"archive_file": "{}/c1-snli/model.tar.gz".format(MODEL_DIR)
 }
 
 C1_MNLI_HALF_1 = {
-	"model_name": "c1-mnli-half-1"
+	"model_name": "c1-mnli-half-1",
 	"archive_file": "{}/c1-mnli-half-1/model.tar.gz".format(MODEL_DIR)
 }
 
 C1_MNLI_HALF_2 = {
-	"model_name": "c1-mnli-half-2"
+	"model_name": "c1-mnli-half-2",
 	"archive_file": "{}/c1-mnli-half-2/model.tar.gz".format(MODEL_DIR)
 }
 
 C1_SNLI_HALF_1 = {
-	"model_name": "c1-snli-half-1"
+	"model_name": "c1-snli-half-1",
 	"archive_file": "{}/c1-snli-half-1/model.tar.gz".format(MODEL_DIR)
 }
 C1_SNLI_HALF_2 = {
-	"model_name": "c1-snli-half-2"
+	"model_name": "c1-snli-half-2",
 	"archive_file": "{}/c1-snli-half-2/model.tar.gz".format(MODEL_DIR)
 }
 
