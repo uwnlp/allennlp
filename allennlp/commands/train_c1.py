@@ -4,6 +4,7 @@ import json
 from allennlp.commands.config import *
 import pandas as pd
 import os
+import arrow
 
 base_config = {
     "dataset_reader": {
@@ -91,10 +92,10 @@ def make_splits(corpus):
     half_size = int(df.shape[0]/2)
     df_half_1 = df.head(n=half_size)
     df_half_2 = df.tail(n=half_size)
-    print("SIZE OF HALVES:{} // TOTAL_SIZE: {}".format(half_size, df.shape[0]))
+    log = "SIZE OF HALVES:{} // TOTAL_SIZE: {}".format(half_size, df.shape[0])
     df_half_1.to_json(DATASETS[half_1]['original'], lines=True, orient='records')
     df_half_2.to_json(DATASETS[half_2]['original'], lines=True, orient='records')
-
+    return log
 def execute(cmd):
     popen = subprocess.Popen(cmd,
                              stdout=subprocess.PIPE,
@@ -116,7 +117,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if args.split == 'half':
         print("splitting...")
-        make_splits(args.corpus)
+        split_log = make_splits(args.corpus)
     if args.corpus == 'mnli' and args.split == 'full':
         model_name = "multinli_0.9_train"
         base_config['train_data_path'] = "multinli_0.9_train"
@@ -162,9 +163,18 @@ if __name__ == '__main__':
                "--serialization-dir",
                serialization_dir,
                "--c1"]
-    print("TRAIN_DATA_PATH: {}".format(base_config['train_data_path']))
-    print("VALIDATION_DATA_PATH: {}".format(base_config['validation_data_path']))
-    print("CONFIG_FILE: {}".format(CONFIG))
-    print(" ".join(command))
-    for path in execute(command):
-        print(path, end="")
+    
+    
+    now = arrow.utcnow()
+    log_file = './execute_train_logs/{}_{}_{}_{}.log'.format(args.corpus, args.split, args.half, now)
+    with open(log_file, 'w+') as f:
+        if split_log:
+            f.write(split_log)
+        f.write(" ".join(command))
+        f.write("ARGS: {} {} {}")
+        f.write("TRAIN_DATA_PATH: {}".format(base_config['train_data_path']))
+        f.write("VALIDATION_DATA_PATH: {}".format(base_config['validation_data_path']))
+        f.write("CONFIG_FILE: {}".format(config_file))
+        f.write("SERIALIZATION DIR: {}".format(serialization_dir))
+    # for path in execute(command):
+    #     print(path, end="")
