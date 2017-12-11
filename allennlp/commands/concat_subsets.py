@@ -2,6 +2,9 @@ import pandas as pd
 from config import *
 
 if __name__ == '__main__':
+	parser = argparse.ArgumentParser(description='concat hard and easy train halfs')
+	parser.add_argument('--corpus')
+	args = parser.parse_args()
 	if args.corpus == 'mnli':
 		half_1 = MNLI_TRAIN_HALF_1
 		half_2 = MNLI_TRAIN_HALF_2
