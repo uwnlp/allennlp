@@ -30,7 +30,7 @@ if __name__ == '__main__':
 				   "--archive-file",
 				   archive_file,
 				   "--evaluation-data-file",
-				   evaluation_data_file,
+				   eval_file,
 				   "--c1"]
 		commands.append(command)
 		print(" ".join(command))
