@@ -88,31 +88,42 @@ DATASETS = {"multinli_0.9_test_matched_unlabeled": MATCHED_TEST,
 
 C1_MNLI = {
 	"model_name": "c1-mnli",
-	"archive_file": "{}/c1-mnli/model.tar.gz".format(MODEL_DIR)
+	"archive_file": "{}/c1-mnli/model.tar.gz".format(MODEL_DIR),
+	"evaluation": [MATCHED_DEV,
+				   MATCHED_TEST,
+				   MISMATCHED_DEV,
+				   MISMATCHED_TEST]
 }
 
 C1_SNLI = {
 	"model_name": "c1-snli",
-	"archive_file": "{}/c1-snli/model.tar.gz".format(MODEL_DIR)
+	"archive_file": "{}/c1-snli/model.tar.gz".format(MODEL_DIR),
+	"evaluation": [SNLI_DEV,
+				   SNLI_TEST]
 }
 
 C1_MNLI_HALF_1 = {
 	"model_name": "c1-mnli-half-1",
-	"archive_file": "{}/c1-mnli-half-1/model.tar.gz".format(MODEL_DIR)
+	"archive_file": "{}/c1-mnli-half-1/model.tar.gz".format(MODEL_DIR),
+	"evaluation": [MNLI_TRAIN_HALF_2]
 }
 
 C1_MNLI_HALF_2 = {
 	"model_name": "c1-mnli-half-2",
-	"archive_file": "{}/c1-mnli-half-2/model.tar.gz".format(MODEL_DIR)
+	"archive_file": "{}/c1-mnli-half-2/model.tar.gz".format(MODEL_DIR),
+	"evaluation": [MNLI_TRAIN_HALF_1]
 }
 
 C1_SNLI_HALF_1 = {
 	"model_name": "c1-snli-half-1",
-	"archive_file": "{}/c1-snli-half-1/model.tar.gz".format(MODEL_DIR)
+	"archive_file": "{}/c1-snli-half-1/model.tar.gz".format(MODEL_DIR),
+	"evaluation": [SNLI_TRAIN_HALF_2]
 }
+
 C1_SNLI_HALF_2 = {
 	"model_name": "c1-snli-half-2",
-	"archive_file": "{}/c1-snli-half-2/model.tar.gz".format(MODEL_DIR)
+	"archive_file": "{}/c1-snli-half-2/model.tar.gz".format(MODEL_DIR),
+	"evaluation": [SNLI_TRAIN_HALF_1]
 }
 
 MODELS = {"c1-mnli": C1_MNLI,
