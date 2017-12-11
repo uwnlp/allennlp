@@ -1,5 +1,5 @@
 DATA_DIR = "/home/sg01/allennlp/final_data"
-
+MODEL_DIR = "/home/sg01/allennlp/final_logs"
 
 MATCHED_TEST = {
 	"original": "/home/sg01/real_nli/data/multinli_1.0/multinli_0.9_test_matched_unlabeled.jsonl", 
@@ -86,12 +86,34 @@ DATASETS = {"multinli_0.9_test_matched_unlabeled": MATCHED_TEST,
 
 
 
-C1_MNLI = {"archive_file": "/home/sg01/allennlp/final_logs/c1-mnli/model.tar.gz"}
-C1_SNLI = {"archive_file": "/home/sg01/allennlp/final_logs/c1-snli/model.tar.gz"}
-C1_MNLI_HALF_1 = {"archive_file": "/home/sg01/allennlp/final_logs/c1-mnli-half-1/model.tar.gz"}
-C1_MNLI_HALF_2 = {"archive_file": "/home/sg01/allennlp/final_logs/c1-mnli-half-2/model.tar.gz"}
-C1_SNLI_HALF_1 = {"archive_file": "/home/sg01/allennlp/final_logs/c1-snli-half-1/model.tar.gz"}
-C1_SNLI_HALF_2 = {"archive_file": "/home/sg01/allennlp/final_logs/c1-snli-half-2/model.tar.gz"}
+C1_MNLI = {
+	"model_name": "c1-mnli"
+	"archive_file": "{}/c1-mnli/model.tar.gz".format(MODEL_DIR)
+}
+
+C1_SNLI = {
+	"model_name": "c1-snli"
+	"archive_file": "{}/c1-snli/model.tar.gz".format(MODEL_DIR)
+}
+
+C1_MNLI_HALF_1 = {
+	"model_name": "c1-mnli-half-1"
+	"archive_file": "{}/c1-mnli-half-1/model.tar.gz".format(MODEL_DIR)
+}
+
+C1_MNLI_HALF_2 = {
+	"model_name": "c1-mnli-half-2"
+	"archive_file": "{}/c1-mnli-half-2/model.tar.gz".format(MODEL_DIR)
+}
+
+C1_SNLI_HALF_1 = {
+	"model_name": "c1-snli-half-1"
+	"archive_file": "{}/c1-snli-half-1/model.tar.gz".format(MODEL_DIR)
+}
+C1_SNLI_HALF_2 = {
+	"model_name": "c1-snli-half-2"
+	"archive_file": "{}/c1-snli-half-2/model.tar.gz".format(MODEL_DIR)
+}
 
 MODELS = {"c1-mnli": C1_MNLI,
 		  "c1-snli": C1_SNLI,

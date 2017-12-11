@@ -120,31 +120,31 @@ if __name__ == '__main__':
         print("splitting...")
         split_log = make_splits(args.corpus)
     if args.corpus == 'mnli' and args.split == 'full':
-        model_name = "multinli_0.9_train"
+        model_name = C1_MNLI["model_name"]
         base_config['train_data_path'] = "multinli_0.9_train"
         base_config['validation_data_path'] = "multinli_0.9_dev_matched"
     elif args.corpus == 'mnli' and args.split == 'half':
         if args.half == 1:
-            model_name = "mnli_train_half_1"
+            model_name = C1_MNLI_HALF_1["model_name"]
             base_config['train_data_path'] = "mnli_train_half_1"
             base_config['validation_data_path'] = "multinli_0.9_dev_matched"
         elif args.half == 2:
-            model_name = "mnli_train_half_2"
+            model_name = C1_MNLI_HALF_2["model_name"]
             base_config['train_data_path'] = "mnli_train_half_2"
             base_config['validation_data_path'] = "multinli_0.9_dev_matched"
         else:
             raise Exception("invalid argument")
     elif args.corpus == 'snli' and args.split == 'full':
-        model_name = "snli_1.0_train"
+        model_name = C1_SNLI["model_name"]
         base_config['train_data_path'] = "snli_1.0_train"
         base_config['validation_data_path'] = "snli_1.0_dev"  
     elif args.corpus == 'snli' and args.split == 'half':
         if args.half == 1:
-            model_name = "snli_train_half_1"
+            model_name = C1_SNLI_HALF_1["model_name"]
             base_config['train_data_path'] = "snli_train_half_1"
             base_config['validation_data_path'] = "snli_1.0_dev"  
         elif args.half == 2:
-            model_name = "snli_train_half_2"
+            model_name = C1_SNLI_HALF_2["model_name"]
             base_config['train_data_path'] = "snli_train_half_2"
             base_config['validation_data_path'] = "snli_1.0_dev"
         else:
@@ -157,15 +157,14 @@ if __name__ == '__main__':
     with open(config_file, 'w+') as f:
         out = json.dumps(base_config)
         f.write(out)
-    serialization_dir = "/home/sg01/allennlp/final_logs/{}".format(model_name) 
+    serialization_dir = "{}/{}".format(MODEL_DIR, model_name) 
     command = ["CUDA_VISIBLE_DEVICES={}".format(args.gpu),
                "python -m allennlp.run train",
                config_file, 
                "--serialization-dir",
                serialization_dir,
                "--c1"]
-    
-    
+
     now = arrow.utcnow()
     log_file = './execute_train_logs/{}_{}_{}_{}.log'.format(args.corpus, args.split, args.half, now)
     with open(log_file, 'w+') as f:
