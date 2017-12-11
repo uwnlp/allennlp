@@ -1,3 +1,5 @@
+import pandas as pd
+
 base_config = {
     "dataset_reader": {
       "type": "snli",
@@ -74,30 +76,31 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser(description='Test and Subset')
   parser.add_argument('--corpus', choice=['mnli', 'snli'], type=str)
   parser.add_argument('--split', choice=['half', 'full'], type=str)
-  parser.add_argument('--half', choice=[1, 2], type=int, required=False)
+  parser.add_argument('--half', choice=[0, 1, 2], type=int, default=0)
   if args.corpus == 'mnli' and args.split == 'full':
-    base_config['train_data_path'] = 
-    base_config['validation_data_path'] = 
+    base_config['train_data_path'] = "multinli_0.9_train"
+    base_config['validation_data_path'] = "multinli_0.9_dev_matched"
   elif args.corpus == 'mnli' and args.split == 'half':
     if args.half == 1:
-      base_config['train_data_path'] = 
-      base_config['validation_data_path'] = 
+      base_config['train_data_path'] = "mnli_train_half_1"
+      base_config['validation_data_path'] = "multinli_0.9_dev_matched"
     elif args.half == 2:
-      base_config['train_data_path'] = 
-      base_config['validation_data_path'] = 
+      base_config['train_data_path'] = "mnli_train_half_2"
+      base_config['validation_data_path'] = "multinli_0.9_dev_matched"
     else:
       raise Exception("invalid argument")
   elif args.corpus == 'snli' and args.split == 'full':
-    base_config['train_data_path'] = 
-    base_config['validation_data_path'] =     
+    base_config['train_data_path'] = "snli_1.0_train"
+    base_config['validation_data_path'] = "snli_1.0_dev"  
   elif args.corpus == 'snli' and args.split == 'half':
     if args.half == 1:
-      base_config['train_data_path'] = 
-      base_config['validation_data_path'] = 
+      base_config['train_data_path'] = "snli_train_half_1"
+      base_config['validation_data_path'] = "snli_1.0_dev"  
     elif args.half == 2:
-      base_config['train_data_path'] = 
-      base_config['validation_data_path'] = 
+      base_config['train_data_path'] = "snli_train_half_2"
+      base_config['validation_data_path'] = "snli_1.0_dev"
     else:
       raise Exception("invalid argument")
   else:
-    raise Exception("invalid argument")    
+    raise Exception("invalid argument")  
+  pd.to_json("/home/sg01/allennlp/training_config/c1_train_configs/{}_{}_{}".format(corpus, split, half), lines=True, orient='records')  
