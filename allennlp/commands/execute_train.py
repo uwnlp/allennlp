@@ -126,7 +126,7 @@ if __name__ == '__main__':
     else:
         raise Exception("invalid argument") 
     config_file = "/home/sg01/allennlp/training_config/c1_train_configs/{}_{}_{}.json".format(args.corpus, args.split, args.half)
-    with open(config, 'w+') as f:
+    with open(config_file, 'w+') as f:
         json.dumps(base_config, f)
     serialization_dir = "/home/sg01/allennlp/final_logs/{}".format(model_name) 
     command = ["CUDA_VISIBLE_DEVICES={}".format(args.gpu),
