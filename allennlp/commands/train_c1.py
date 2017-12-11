@@ -170,11 +170,11 @@ if __name__ == '__main__':
     with open(log_file, 'w+') as f:
         if split_log:
             f.write(split_log)
-        f.write(" ".join(command))
-        f.write("ARGS: {} {} {}")
-        f.write("TRAIN_DATA_PATH: {}".format(base_config['train_data_path']))
-        f.write("VALIDATION_DATA_PATH: {}".format(base_config['validation_data_path']))
-        f.write("CONFIG_FILE: {}".format(config_file))
-        f.write("SERIALIZATION DIR: {}".format(serialization_dir))
+        f.write(" ".join(command)+ "\n")
+        f.write("ARGS: {} {} {}\n".format(args.corpus, args.split, args.half))
+        f.write("TRAIN_DATA_PATH: {}\n".format(base_config['train_data_path']))
+        f.write("VALIDATION_DATA_PATH: {}\n".format(base_config['validation_data_path']))
+        f.write("CONFIG_FILE: {}\n".format(config_file))
+        f.write("SERIALIZATION DIR: {}\n".format(serialization_dir))
     # for path in execute(command):
     #     print(path, end="")
