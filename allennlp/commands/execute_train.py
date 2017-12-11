@@ -75,6 +75,23 @@ base_config = {
     }
   }
 
+def make_splits(corpus):
+    if corpus == 'mnli':
+        dataset = 'multinli_0.9_train'
+        half_1 = 'mnli_train_half_1'
+        half_2 = 'mnli_train_half_2'
+    else:
+        dataset = 'snli_1.0_train'
+        half_1 = 'snli_train_half_1'
+        half_2 = 'snli_train_half_2'
+    df = pd.read_json(DATASETS[dataset]['original'], lines=True)
+    df = df.sample(frac=1, random_state=1)
+    half_size = int(df.shape[0]/2)
+    half_1 = df.head(n=half_size)
+    half_2 = df.tail(n=half_size)
+    half_1.to_json(DATASETS[half_1]['original'], lines=True, orient='records')
+    half_2.to_json(DATASETS[half_2]['original'], lines=True, orient='records')
+
 def execute(cmd):
     popen = subprocess.Popen(cmd,
                              stdout=subprocess.PIPE,
@@ -94,6 +111,8 @@ if __name__ == '__main__':
     parser.add_argument('--half', choices=[0, 1, 2], type=int, default=0)
     parser.add_argument('--gpu', choices=[0, 1, 2], type=int)
     args = parser.parse_args()
+    if args.split == 'half':
+        make_splits(args.corpus)
     if args.corpus == 'mnli' and args.split == 'full':
         model_name = "multinli_0.9_train"
         base_config['train_data_path'] = "multinli_0.9_train"

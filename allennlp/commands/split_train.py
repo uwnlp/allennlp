@@ -3,12 +3,9 @@ from allennlp.commands.config import *
 import os
 
 # TODO: 1-line-missing problem
- 
-if __name__ == '__main__':
-	parser = argparse.ArgumentParser(description='Train CV Split')
-	parser.add_argument('--corpus', choice=['mnli', 'snli'], type=str)
-	args = parser.parse_args()
-	if args.corpus == 'mnli':
+
+def make_splits(corpus):
+	if corpus == 'mnli':
 		dataset = 'multinli_0.9_train'
 		half_1 = 'mnli_train_half_1'
 		half_2 = 'mnli_train_half_2'
