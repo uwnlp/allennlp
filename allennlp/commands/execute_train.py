@@ -40,7 +40,7 @@ if __name__ == '__main__':
     else:
         raise Exception("invalid argument: ", args.corpus) 
     serialization_dir = "/home/sg01/allennlp/final_logs/{}".format(model_name) 
-    command = [args.gpu,
+    command = [str(args.gpu),
                "python -m allennlp.run train",
                config_file, 
                "--serialization-dir",
