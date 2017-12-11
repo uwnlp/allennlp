@@ -7,7 +7,7 @@ base_config = {
       "token_indexers": {
         "tokens": {
           "type": "single_id",
-          "lowercase_tokens": true
+          "lowercase_tokens": True
         }
       },
       "tokenizer": {
@@ -24,7 +24,7 @@ base_config = {
           "projection_dim": 200,
           "pretrained_file": "https://s3-us-west-2.amazonaws.com/allennlp/datasets/glove/glove.6B.300d.txt.gz",
           "embedding_dim": 300,
-          "trainable": false
+          "trainable": False
         }
       },
       "attend_feedforward": {
@@ -66,13 +66,13 @@ base_config = {
       "cuda_device": 0,
       "grad_clipping": 5.0,
       "validation_metric": "+accuracy",
-      "no_tqdm": true,
+      "no_tqdm": True,
       "optimizer": {
         "type": "adagrad"
       }
     }
   }
-  
+
 def execute(cmd):
     popen = subprocess.Popen(cmd,
                              stdout=subprocess.PIPE,
