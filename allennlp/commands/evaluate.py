@@ -73,13 +73,19 @@ class Evaluate(Subcommand):
 
         subparser.set_defaults(func=evaluate_from_args)
         subparser.add_argument('--c1', action='store_true', default=False)
+        subparser.add_argument('-t', '--threshold',
+                               type=float,
+                               default=0.4,
+                               help='threshold for easy/hard subsetting')
+
         return subparser
 
 
 def evaluate(model: Model,
              dataset: Dataset,
              iterator: DataIterator,
-             cuda_device: int) -> Dict[str, Any]:
+             cuda_device: int,
+             thresh: float) -> Dict[str, Any]:
     model.eval()
 
     generator = iterator(dataset, num_epochs=1)
@@ -141,10 +147,11 @@ def evaluate(model: Model,
             import ipdb; ipdb.set_trace()
         parsed_output = pd.concat([parsed_fields, batch_output], axis=1)
         output = pd.concat([output, parsed_output], axis=0)
+
     hard_subset = output.loc[(output.gold_label != output.prediction_label)
-                             | (output.prediction_score <= 0.4)]
+                             | (output.prediction_score <= thresh)]
     easy_subset = output.loc[(output.gold_label == output.prediction_label)
-                             & (output.prediction_score > 0.4)]
+                             & (output.prediction_score > thresh)]
     return model.get_metrics(), output, hard_subset, easy_subset
 
 
@@ -170,7 +177,11 @@ def evaluate_from_args(args: argparse.Namespace) -> Dict[str, Any]:
 
     iterator = DataIterator.from_params(config.pop("iterator"))
 
-    metrics, output, hard_subset, easy_subset = evaluate(model, dataset, iterator, args.cuda_device)
+    metrics, output, hard_subset, easy_subset = evaluate(model,
+                                                         dataset,
+                                                         iterator,
+                                                         args.cuda_device,
+                                                         args.threshold)
     
     logger.info("Finished evaluating.")
     logger.info("Metrics:")
@@ -179,8 +190,8 @@ def evaluate_from_args(args: argparse.Namespace) -> Dict[str, Any]:
     ds = args.evaluation_data_file.split('/')[-1][:-6]
     import ipdb; ipdb.set_trace()
     if args.c1 and DATASETS[ds].get("easy") is not None:
-        hard_subset.to_json(DATASETS[ds]["hard"], lines=True, orient='records')
-        easy_subset.to_json(DATASETS[ds]["easy"], lines=True, orient='records')
+        hard_subset.to_json(DATASETS[ds]["hard"] + "_{}".format(args.threshold), lines=True, orient='records')
+        easy_subset.to_json(DATASETS[ds]["easy"] + "_{}".format(args.threshold), lines=True, orient='records')
     elif args.c1 and DATASETS[ds].get("easy") is None:
         # unlabeled test
         output.to_csv(DATASETS[ds]["prediction_csv"], index=False, sep = '\t')
