@@ -54,7 +54,7 @@ class SnliReader(DatasetReader):
                 label = example["gold_label"]
                 if label == 'hidden':
                     label = np.random.choice(['contradiction', 'neutral', 'entailment'])
-
+                
                 if label == '-':
                     # These were cases where the annotators disagreed; we'll just skip them.  It's
                     # like 800 out of 500k examples in the training data.
@@ -67,6 +67,7 @@ class SnliReader(DatasetReader):
                     real_premise = example["sentence1"]
                 hypothesis = example["sentence2"]
                 genre = example.get('genre')
+                is_hard = example.get('is_hard', 0)
                 pair_id = example['pairID']
                 premise_binary_parse = example.get('sentence1_binary_parse')
                 hypothesis_binary_parse = example.get('sentence2_binary_parse')
@@ -81,7 +82,8 @@ class SnliReader(DatasetReader):
                                                        hypothesis_parse,
                                                        pair_id,
                                                        genre,
-                                                       label))
+                                                       label,
+                                                       is_hard))
         if not instances:
             raise ConfigurationError("No instances were read from the given filepath {}. "
                                      "Is the path correct?".format(file_path))
@@ -98,7 +100,8 @@ class SnliReader(DatasetReader):
                          hypothesis_parse: str = None,
                          pair_id: str = None,
                          genre: str = None,
-                         label: str = None) -> Instance:
+                         label: str = None,
+                         is_hard: bool = None) -> Instance:
         # pylint: disable=arguments-differ
         fields: Dict[str, Field] = {}
         premise_tokens = self._tokenizer.tokenize(premise)
@@ -112,6 +115,7 @@ class SnliReader(DatasetReader):
         fields['metadata_hypothesis_parse'] = MetadataField(hypothesis_parse)
         fields['metadata_premise_parse'] = MetadataField(premise_parse)
         fields['metadata_pair_id'] = MetadataField(pair_id)
+        fields["metadata_is_hard"] = MetadataField(is_hard)
         if genre:
             fields['metadata_genre'] = MetadataField(genre)
         if label:

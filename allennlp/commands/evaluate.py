@@ -150,8 +150,10 @@ def evaluate(model: Model,
 
     hard_subset = output.loc[(output.gold_label != output.prediction_label)
                              | (output.prediction_score <= thresh)]
+    hard_subset['is_hard'] = 1
     easy_subset = output.loc[(output.gold_label == output.prediction_label)
                              & (output.prediction_score > thresh)]
+    easy_subset['is_hard'] = 0
     return model.get_metrics(), output, hard_subset, easy_subset
 
 
