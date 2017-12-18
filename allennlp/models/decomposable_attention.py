@@ -90,7 +90,7 @@ class DecomposableAttention(Model):
                                      (aggregate_feedforward.get_output_dim(), self._num_labels))
 
         self._accuracy = CategoricalAccuracy()
-        self._loss = torch.nn.CrossEntropyLoss(reduce=False)
+        self._loss = torch.nn.CrossEntropyLoss()
 
         initializer(self)
 

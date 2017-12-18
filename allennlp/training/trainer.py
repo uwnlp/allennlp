@@ -214,7 +214,7 @@ class Trainer:
         batch_num = 0
 
         logger.info("Training")
-        for raw_batch, batch in train_generator_tqdm:
+        for _, batch in train_generator_tqdm:
             batch_num += 1
             self._optimizer.zero_grad()
 
@@ -224,14 +224,14 @@ class Trainer:
             # Make sure Variable is on the cpu before converting to numpy.
             # .cpu() is a no-op if you aren't using GPUs.
             train_loss += loss.data.cpu().numpy()
-            raw_fields = [x.fields for x in raw_batch.instances]
-            instance_weights = []
-            for item in raw_fields:
-                is_hard = item["is_hard"].metadata
-                weight = 2 if is_hard == 1 else 1
-                instance_weights.append(weight)
-            train_loss *= instance_weights
-            train_loss = torch.mean(train_loss)
+            # raw_fields = [x.fields for x in raw_batch.instances]
+            # instance_weights = []
+            # for item in raw_fields:
+            #     is_hard = item["is_hard"].metadata
+            #     weight = 2 if is_hard == 1 else 1
+            #     instance_weights.append(weight)
+            # train_loss *= instance_weights
+            # train_loss = torch.mean(train_loss)
             self._rescale_gradients()
 
             self._optimizer.step()
